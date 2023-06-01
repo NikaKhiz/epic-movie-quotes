@@ -3,5 +3,6 @@
     <slot name="landing-header-upper"></slot>
     <slot name="landing-header-lower"></slot>
   </header>
+  <slot name="landing-content"></slot>
   <slot name="landing-footer"></slot>
 </template>
