@@ -4,7 +4,7 @@ import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
 import { useModalStore } from "@/stores/modalStore.js";
 import { computed } from "vue";
 import FormSignUp from "@/components/FormSignUp.vue";
-// import FormLogIn from "@/components/FormLogIn.vue";
+import FormLogIn from "@/components/FormLogIn.vue";
 
 const props = defineProps({
   buttonSize: {
@@ -28,7 +28,7 @@ const modalStore = useModalStore();
 const availableForms = {
   dialogSignUp: FormSignUp,
   dialogGetStarted: FormSignUp,
-  dialogLogIn: null,
+  dialogLogIn: FormLogIn,
 };
 
 const selectedComponent = computed(() => {
