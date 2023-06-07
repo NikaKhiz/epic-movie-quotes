@@ -1,7 +1,6 @@
 <script setup>
 import ButtonLanguage from "@/components/ui/buttons/ButtonLanguage.vue";
-import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
-import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
+import ModalMain from "@/components/ModalMain.vue";
 </script>
 <template>
   <div
@@ -10,8 +9,12 @@ import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
     <h2 class="uppercase text-brownyWhite">Movie quotes</h2>
     <div class="flex items-center gap-4">
       <ButtonLanguage>Eng</ButtonLanguage>
-      <ButtonPrimary size="small">Sign up</ButtonPrimary>
-      <ButtonSecondary>Log in</ButtonSecondary>
+      <ModalMain currentDialog="dialogSignUp" buttonSize="small" />
+      <ModalMain
+        currentDialog="dialogLogIn"
+        buttonLabel="Log in"
+        buttonSize="small"
+      />
     </div>
   </div>
 </template>
