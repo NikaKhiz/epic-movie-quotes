@@ -1,5 +1,5 @@
 <script setup>
-import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
+import ModalMain from "@/components/ModalMain.vue";
 </script>
 <template>
   <div class="py-44 md:py-80 flex flex-col gap-8 md:gap-6 items-center">
@@ -9,7 +9,7 @@ import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
       Find any quote in millions of movie lines
     </h1>
     <div class="flex items-center gap-4">
-      <ButtonPrimary size="large">Sign up</ButtonPrimary>
+      <ModalMain currentDialog="dialogGetStarted" buttonLabel="Get started" />
     </div>
   </div>
 </template>
