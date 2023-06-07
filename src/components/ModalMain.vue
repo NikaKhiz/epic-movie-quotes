@@ -3,6 +3,8 @@ import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
 import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
 import { useModalStore } from "@/stores/modalStore.js";
 import { computed } from "vue";
+import FormSignUp from "@/components/FormSignUp.vue";
+// import FormLogIn from "@/components/FormLogIn.vue";
 
 const props = defineProps({
   buttonSize: {
@@ -24,8 +26,8 @@ const props = defineProps({
 const modalStore = useModalStore();
 
 const availableForms = {
-  dialogSignUp: null,
-  dialogGetStarted: null,
+  dialogSignUp: FormSignUp,
+  dialogGetStarted: FormSignUp,
   dialogLogIn: null,
 };
 
