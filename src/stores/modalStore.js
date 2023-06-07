@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useCounterStore = defineStore("modalStore", {
+export const useModalStore = defineStore("modalStore", {
   state: () => {
     return {
       dialogLogIn: false,
