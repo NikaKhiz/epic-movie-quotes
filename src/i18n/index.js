@@ -1,5 +1,5 @@
 import { createI18n } from "vue-i18n";
-import { getCurrentLocale, getFallbackLocale } from "@/utils/getLocales";
+import { getCurrentLocale, getFallbackLocale } from "@/utils/getLocale";
 
 import en from "@/locales/en.json";
 import ka from "@/locales/ka.json";
