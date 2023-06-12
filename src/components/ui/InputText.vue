@@ -16,11 +16,16 @@ defineProps({
   },
   rules: {
     type: String,
-    required: false,
+    required: true,
   },
   model: {
     type: String,
     required: false,
+  },
+  type: {
+    type: String,
+    required: false,
+    default: "text",
   },
   required: {
     type: Boolean,
@@ -37,6 +42,7 @@ defineProps({
       >{{ label }} <sup v-if="required" class="text-shinyRed">*</sup></label
     >
     <Field
+      :type="type"
       :name="name"
       :id="name"
       :placeholder="placeholder"
@@ -44,6 +50,10 @@ defineProps({
       :v-model="model"
       class="transition-all text-darkBlack placeholder:text-darkGray bg-lightBlue py-2 px-3 rounded-md outline-none focus:ring focus:ring-lightishGray"
     />
-    <ErrorMessage as="p" class="text-dullRed font-normal" :name="name" />
+    <ErrorMessage
+      as="p"
+      class="text-dullRed font-normal text-sm"
+      :name="name"
+    />
   </div>
 </template>
