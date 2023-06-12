@@ -1,74 +1,43 @@
 <script setup>
-import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
-import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
 import { useModalStore } from "@/stores/modalStore.js";
-import { computed } from "vue";
+import { computed, provide } from "vue";
 import FormSignUp from "@/components/FormSignUp.vue";
 import FormLogIn from "@/components/FormLogIn.vue";
 
-const props = defineProps({
-  buttonSize: {
-    type: String,
-    required: false,
-    default: "large",
-  },
-  buttonLabel: {
-    type: String,
-    required: false,
-    default: "Sign up",
-  },
-  currentDialog: {
-    type: String,
-    required: true,
-  },
-});
-
 const modalStore = useModalStore();
-
-const availableForms = {
-  dialogSignUp: FormSignUp,
-  dialogGetStarted: FormSignUp,
-  dialogLogIn: FormLogIn,
+const availableDialogs = {
+  signUp: FormSignUp,
+  logIn: FormLogIn,
 };
-
 const selectedComponent = computed(() => {
-  return availableForms[props.currentDialog];
-});
-const signInDialog = computed(() => {
-  return props.currentDialog === "dialogLogIn";
+  return availableDialogs[modalStore.activeDialog];
 });
 
 const fullScreenModal = computed(() => {
   return window.innerWidth <= 380;
 });
+
+provide("fullScreenModal", fullScreenModal);
 </script>
 <template>
   <v-dialog
-    transition="dialog-top-transition"
-    v-model="modalStore[currentDialog]"
+    v-model="modalStore.dialog[modalStore.activeDialog]"
     class="w-full md:max-w-2xl"
-    :class="{ 'bg-darkBlack align-start ': fullScreenModal }"
+    :class="{
+      'bg-darkBlack ': fullScreenModal,
+    }"
   >
-    <template v-slot:activator="{ props }">
-      <ButtonPrimary v-bind="props" :size="buttonSize" v-if="!signInDialog">
-        {{ buttonLabel }}
-      </ButtonPrimary>
-      <ButtonSecondary v-bind="props" :size="buttonSize" v-if="signInDialog">
-        {{ buttonLabel }}
-      </ButtonSecondary>
-    </template>
-    <div
-      class="max-w-2xl p-4 flex items-center justify-center md:bg-neutralBlack md:py-14 rounded-lg"
-      :class="{
-        'bg-darkBlack': !fullScreenModal,
-        'bg-transparent': fullScreenModal,
-      }"
+    <transition
+      appear
+      enter-from-class="opacity-0"
+      enter-active-class="transition-[all] duration-[200ms]"
+      enter-to-class="opacity-100"
+      leave-from-class="opacity-100"
+      leave-active-class="transition-[all] duration-[200ms]"
+      leave-to-class="opacity-0"
+      mode="out-in"
     >
-      <component
-        :is="selectedComponent"
-        :currentDialog="props.currentDialog"
-        class="w-full max-w-sm"
-      ></component>
-    </div>
+      <component :is="selectedComponent"></component>
+    </transition>
   </v-dialog>
 </template>

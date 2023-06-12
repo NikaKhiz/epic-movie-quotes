@@ -1,5 +1,9 @@
 <script setup>
-import ModalMain from "@/components/ModalMain.vue";
+import { useModalStore } from "@/stores/modalStore";
+import { toggleModal } from "@/utils/toggleModal.js";
+import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
+
+const modalStore = useModalStore();
 </script>
 <template>
   <div class="py-44 md:py-80 flex flex-col gap-8 md:gap-6 items-center">
@@ -9,7 +13,9 @@ import ModalMain from "@/components/ModalMain.vue";
       Find any quote in millions of movie lines
     </h1>
     <div class="flex items-center gap-4">
-      <ModalMain currentDialog="dialogGetStarted" buttonLabel="Get started" />
+      <ButtonPrimary @click="toggleModal(modalStore, 'signUp')"
+        >Get started</ButtonPrimary
+      >
     </div>
   </div>
 </template>

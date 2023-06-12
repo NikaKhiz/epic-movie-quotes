@@ -1,6 +1,11 @@
 <script setup>
+import { useModalStore } from "@/stores/modalStore";
+import { toggleModal } from "@/utils/toggleModal.js";
 import ButtonLanguage from "@/components/ui/buttons/ButtonLanguage.vue";
-import ModalMain from "@/components/ModalMain.vue";
+import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
+import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
+
+const modalStore = useModalStore();
 </script>
 <template>
   <div
@@ -8,13 +13,13 @@ import ModalMain from "@/components/ModalMain.vue";
   >
     <h2 class="uppercase text-brownyWhite">Movie quotes</h2>
     <div class="flex items-center gap-4">
-      <ButtonLanguage>Eng</ButtonLanguage>
-      <ModalMain currentDialog="dialogSignUp" buttonSize="small" />
-      <ModalMain
-        currentDialog="dialogLogIn"
-        buttonLabel="Log in"
-        buttonSize="small"
-      />
+      <ButtonLanguage />
+      <ButtonPrimary size="small" @click="toggleModal(modalStore, 'signUp')">
+        Sign up
+      </ButtonPrimary>
+      <ButtonSecondary size="small" @click="toggleModal(modalStore, 'logIn')"
+        >Log in</ButtonSecondary
+      >
     </div>
   </div>
 </template>
