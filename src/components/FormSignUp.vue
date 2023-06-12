@@ -1,5 +1,7 @@
 <script setup>
-import { Form } from "vee-validate";
+import { useModalStore } from "@/stores/modalStore";
+import { toggleModal } from "@/utils/toggleModal.js";
+import FormMain from "@/components/FormMain.vue";
 import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
 import ButtonIntent from "@/components/ui/buttons/ButtonIntent.vue";
@@ -9,27 +11,17 @@ import FormFields from "@/components/FormFields.vue";
 import FormHeading from "@/components/FormHeading.vue";
 import FormFooter from "@/components/FormFooter.vue";
 import InputText from "@/components/ui/InputText.vue";
-defineProps({
-  currentDialog: {
-    type: String,
-    required: false,
-    default: "",
-  },
-  isNotification: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-});
+
+const modalStore = useModalStore();
 const signUp = () => {
-  // signUp
+  //signUp
 };
 </script>
 <template>
-  <Form @submit="signUp">
+  <FormMain @submit="signUp">
     <FormContainer>
       <FormHeading>
-        <template #heading> Create an account </template>
+        <template #heading> Create an account</template>
         <template #sub-heading> Start your journey! </template>
       </FormHeading>
       <FormFields>
@@ -37,24 +29,30 @@ const signUp = () => {
           :required="true"
           name="name"
           label="name"
+          rules="required|alpha|min:3|max:15"
           placeholder="Enter your name"
         />
         <InputText
           :required="true"
           name="email"
           label="email"
+          rules="required|email"
           placeholder="Enter your email"
         />
         <InputText
+          type="password"
           :required="true"
           name="password"
           label="password"
+          rules="required|alpha_numeric|min:8|max:15"
           placeholder="Password"
         />
         <InputText
+          type="password"
           :required="true"
-          name="password_confirmation"
+          name="confirmation"
           label="Confirm password"
+          rules="confirmed:@password"
           placeholder="Confirm Password"
         />
         <div class="my-2 flex flex-col gap-4">
@@ -68,13 +66,11 @@ const signUp = () => {
       <FormFooter>
         <p>
           Already have an account?
-          <ButtonIntent
-            :dialogToClose="currentDialog"
-            dialogToOpen="dialogLogIn"
+          <ButtonIntent @click="toggleModal(modalStore, 'logIn')"
             >Log in</ButtonIntent
           >
         </p>
       </FormFooter>
     </FormContainer>
-  </Form>
+  </FormMain>
 </template>

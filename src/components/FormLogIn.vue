@@ -1,5 +1,7 @@
 <script setup>
-import { Form } from "vee-validate";
+import { useModalStore } from "@/stores/modalStore";
+import { toggleModal } from "@/utils/toggleModal.js";
+import FormMain from "@/components/FormMain.vue";
 import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
 import ButtonIntent from "@/components/ui/buttons/ButtonIntent.vue";
@@ -9,24 +11,14 @@ import FormFields from "@/components/FormFields.vue";
 import FormHeading from "@/components/FormHeading.vue";
 import FormFooter from "@/components/FormFooter.vue";
 import InputText from "@/components/ui/InputText.vue";
-defineProps({
-  currentDialog: {
-    type: String,
-    required: false,
-    default: "",
-  },
-  isNotification: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-});
+const modalStore = useModalStore();
+
 const signIn = () => {
-  // signUp
+  // signIn
 };
 </script>
 <template>
-  <Form @submit="signIn">
+  <FormMain @click="signIn">
     <FormContainer>
       <FormHeading>
         <template #heading>Log in to your account</template>
@@ -39,12 +31,14 @@ const signIn = () => {
           :required="true"
           name="email"
           label="Email"
+          rules="required|min:3|max:15"
           placeholder="Enter your email"
         />
         <InputText
           :required="true"
           name="password"
           label="password"
+          rules="required"
           placeholder="Password"
         />
         <div class="text-neutralWhite flex items-center justify-between">
@@ -57,9 +51,7 @@ const signIn = () => {
             />
             <label for="remember">Remember me</label>
           </div>
-          <ButtonIntent
-            :dialogToClose="currentDialog"
-            dialogToOpen="dialogPasswordRecovery"
+          <ButtonIntent @click="toggleModal(modalStore, 'passwordRecovery')"
             >Forgot password</ButtonIntent
           >
         </div>
@@ -74,13 +66,11 @@ const signIn = () => {
       <FormFooter>
         <p>
           dont have an accaunt yet?
-          <ButtonIntent
-            :dialogToClose="currentDialog"
-            dialogToOpen="dialogSignUp"
+          <ButtonIntent @click="toggleModal(modalStore, 'signUp')"
             >Sign up</ButtonIntent
           >
         </p>
       </FormFooter>
     </FormContainer>
-  </Form>
+  </FormMain>
 </template>
