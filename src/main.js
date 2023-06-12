@@ -1,12 +1,13 @@
-import "./assets/style.css";
-
+import "@/assets/style.css";
+import "@/plugins/vee-validate/rules.js";
+import "@/plugins/vee-validate/messages.js";
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { createVuetify } from "vuetify/lib/framework.mjs";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
-import App from "./App.vue";
-import router from "./router";
+import App from "@/App.vue";
+import router from "@/router";
 
 const app = createApp(App);
 const vuetify = createVuetify({

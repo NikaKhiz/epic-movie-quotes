@@ -3,11 +3,13 @@ import { useModalStore } from "@/stores/modalStore.js";
 import { computed, provide } from "vue";
 import FormSignUp from "@/components/FormSignUp.vue";
 import FormLogIn from "@/components/FormLogIn.vue";
+import FormPasswordRecovery from "@/components/FormPasswordRecovery.vue";
 
 const modalStore = useModalStore();
 const availableDialogs = {
   signUp: FormSignUp,
   logIn: FormLogIn,
+  passwordRecovery: FormPasswordRecovery,
 };
 const selectedComponent = computed(() => {
   return availableDialogs[modalStore.activeDialog];
