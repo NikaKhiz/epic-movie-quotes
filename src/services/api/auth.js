@@ -15,7 +15,7 @@ export const register = async (name, email, password, passwordConfirmation) => {
 
 export const login = async (email, password) => {
   const response = await axios.post(
-    "/register",
+    "/login",
     JSON.stringify({
       email,
       password,
@@ -26,7 +26,7 @@ export const login = async (email, password) => {
 
 export const recoverPassword = async (email) => {
   const response = await axios.post(
-    "/register",
+    "/forgot-password",
     JSON.stringify({
       email,
     })
