@@ -35,12 +35,13 @@ const signIn = () => {
           :required="true"
           name="email"
           label="Email"
-          rules="required|min:3|max:15"
+          rules="required|email"
           placeholder="Enter your email"
           :backEndError="backErrorsStore.errors"
           v-model="loginStore.email"
         />
         <InputText
+          type="password"
           :required="true"
           name="password"
           label="password"
