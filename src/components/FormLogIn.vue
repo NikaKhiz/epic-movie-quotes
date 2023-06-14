@@ -1,6 +1,8 @@
 <script setup>
 import { useModalStore } from "@/stores/modalStore";
 import { toggleModal } from "@/utils/toggleModal.js";
+import { useBackErrorsStore } from "@/stores/backEndValidationStore.js";
+import { useLoginStore } from "@/stores/loginStore.js";
 import FormMain from "@/components/FormMain.vue";
 import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
@@ -11,8 +13,10 @@ import FormFields from "@/components/FormFields.vue";
 import FormHeading from "@/components/FormHeading.vue";
 import FormFooter from "@/components/FormFooter.vue";
 import InputText from "@/components/ui/InputText.vue";
-const modalStore = useModalStore();
 
+const modalStore = useModalStore();
+const backErrorsStore = useBackErrorsStore();
+const loginStore = useLoginStore();
 const signIn = () => {
   // signIn
 };
@@ -33,6 +37,8 @@ const signIn = () => {
           label="Email"
           rules="required|min:3|max:15"
           placeholder="Enter your email"
+          :backEndError="backErrorsStore.errors"
+          v-model="loginStore.email"
         />
         <InputText
           :required="true"
@@ -40,6 +46,8 @@ const signIn = () => {
           label="password"
           rules="required"
           placeholder="Password"
+          :backEndError="backErrorsStore.errors"
+          v-model="loginStore.password"
         />
         <div class="text-neutralWhite flex items-center justify-between">
           <div class="accent-darkGray flex items-center gap-2">
