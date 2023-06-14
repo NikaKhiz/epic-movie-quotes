@@ -1,6 +1,8 @@
 <script setup>
 import { useModalStore } from "@/stores/modalStore";
 import { toggleModal } from "@/utils/toggleModal.js";
+import { useBackErrorsStore } from "@/stores/backEndValidationStore.js";
+import { useRecoveryStore } from "@/stores/passwordRecoveryStore.js";
 import FormMain from "@/components/FormMain.vue";
 import ButtonBack from "@/components/ui/buttons/ButtonBack.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
@@ -9,7 +11,11 @@ import FormFields from "@/components/FormFields.vue";
 import FormHeading from "@/components/FormHeading.vue";
 import FormFooter from "@/components/FormFooter.vue";
 import InputText from "@/components/ui/InputText.vue";
+
 const modalStore = useModalStore();
+const backErrorsStore = useBackErrorsStore();
+const passwordRecoveryStore = useRecoveryStore();
+
 const recoverPassword = () => {
   // recoverPassword
 };
@@ -31,6 +37,8 @@ const recoverPassword = () => {
           label="Email"
           rules="required|email"
           placeholder="Enter your email"
+          :backEndError="backErrorsStore.errors"
+          v-model="passwordRecoveryStore.email"
         />
       </FormFields>
       <ButtonPrimary> Send instructions </ButtonPrimary>

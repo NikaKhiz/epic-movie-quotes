@@ -2,7 +2,7 @@
 import { useModalStore } from "@/stores/modalStore.js";
 import { useRegisterStore } from "@/stores/registerStore.js";
 import { toggleModal } from "@/utils/toggleModal.js";
-import { useBackErrorsStore } from "@/stores/backErrorsStore.js";
+import { useBackErrorsStore } from "@/stores/backEndValidationStore.js";
 import FormMain from "@/components/FormMain.vue";
 import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
