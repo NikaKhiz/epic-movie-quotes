@@ -1,6 +1,8 @@
 <script setup>
-import { useModalStore } from "@/stores/modalStore";
+import { useModalStore } from "@/stores/modalStore.js";
+import { useRegisterStore } from "@/stores/registerStore.js";
 import { toggleModal } from "@/utils/toggleModal.js";
+import { useBackErrorsStore } from "@/stores/backEndValidationStore.js";
 import FormMain from "@/components/FormMain.vue";
 import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
@@ -12,7 +14,10 @@ import FormHeading from "@/components/FormHeading.vue";
 import FormFooter from "@/components/FormFooter.vue";
 import InputText from "@/components/ui/InputText.vue";
 
+const backErrorsStore = useBackErrorsStore();
 const modalStore = useModalStore();
+const registerStore = useRegisterStore();
+
 const signUp = () => {
   //signUp
 };
@@ -31,6 +36,8 @@ const signUp = () => {
           label="name"
           rules="required|alpha|min:3|max:15"
           placeholder="Enter your name"
+          :backEndError="backErrorsStore.errors"
+          v-model="registerStore.name"
         />
         <InputText
           :required="true"
@@ -38,6 +45,8 @@ const signUp = () => {
           label="email"
           rules="required|email"
           placeholder="Enter your email"
+          :backEndError="backErrorsStore.errors"
+          v-model="registerStore.email"
         />
         <InputText
           type="password"
@@ -46,14 +55,18 @@ const signUp = () => {
           label="password"
           rules="required|alpha_numeric|min:8|max:15"
           placeholder="Password"
+          :backEndError="backErrorsStore.errors"
+          v-model="registerStore.password"
         />
         <InputText
           type="password"
           :required="true"
           name="confirmation"
           label="Confirm password"
-          rules="confirmed:@password"
+          rules="required|confirmed:@password"
           placeholder="Confirm Password"
+          :backEndError="backErrorsStore.errors"
+          v-model="registerStore.passwordConfirmation"
         />
         <div class="my-2 flex flex-col gap-4">
           <ButtonPrimary>Get started</ButtonPrimary>
