@@ -31,9 +31,27 @@ export const login = async (email, password) => {
 
 export const recoverPassword = async (email) => {
   const response = await axios.post(
-    "/forgot-password",
+    "/api/forgot-password",
     JSON.stringify({
       email,
+    })
+  );
+  return response;
+};
+
+export const resetPassword = async (
+  email,
+  token,
+  password,
+  passwordConfirmation
+) => {
+  const response = await axios.post(
+    "/api/reset-password",
+    JSON.stringify({
+      email,
+      token,
+      password,
+      password_confirmation: passwordConfirmation,
     })
   );
   return response;
