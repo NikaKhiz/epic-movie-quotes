@@ -3,6 +3,8 @@ import { useModalStore } from "@/stores/modalStore";
 import { toggleModal } from "@/utils/toggleModal.js";
 import { useBackErrorsStore } from "@/stores/backEndValidationStore.js";
 import { useLoginStore } from "@/stores/loginStore.js";
+import { login } from "@/services/api/auth";
+import { isBackEndErrors } from "@/utils/isBackEndErrors.js";
 import FormMain from "@/components/FormMain.vue";
 import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
@@ -13,16 +15,36 @@ import FormFields from "@/components/FormFields.vue";
 import FormHeading from "@/components/FormHeading.vue";
 import FormFooter from "@/components/FormFooter.vue";
 import InputText from "@/components/ui/InputText.vue";
-
 const modalStore = useModalStore();
 const backErrorsStore = useBackErrorsStore();
 const loginStore = useLoginStore();
-const signIn = () => {
-  // signIn
+import axios from "@/plugins/axios";
+
+const signIn = async () => {
+  axios.get("sanctum/csrf-cookie").then(() => {
+    login(loginStore.email, loginStore.password)
+      .then((response) => {
+        if (response.status === 204) {
+          loginStore.$reset();
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 400 || error.response.status === 401) {
+          backErrorsStore.errors = isBackEndErrors(error.response);
+        } else if (error.response.status === 403) {
+          backErrorsStore.errors = isBackEndErrors(error.response);
+          // in case of no verified , we dont need to show error , just open email veriication notification
+        }
+        loginStore.password = "";
+        setTimeout(() => {
+          backErrorsStore.$reset();
+        }, 3000);
+      });
+  });
 };
 </script>
 <template>
-  <FormMain @click="signIn">
+  <FormMain @submit="signIn">
     <FormContainer>
       <FormHeading>
         <template #heading>Log in to your account</template>
@@ -45,7 +67,7 @@ const signIn = () => {
           :required="true"
           name="password"
           label="password"
-          rules="required"
+          rules="required|min:8|max:15"
           placeholder="Password"
           :backEndError="backErrorsStore.errors"
           v-model="loginStore.password"

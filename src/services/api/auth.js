@@ -20,7 +20,7 @@ export const verifyEmail = async (verificationUrl) => {
 
 export const login = async (email, password) => {
   const response = await axios.post(
-    "/login",
+    "/api/login",
     JSON.stringify({
       email,
       password,
