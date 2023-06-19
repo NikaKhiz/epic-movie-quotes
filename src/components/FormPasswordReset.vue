@@ -27,7 +27,7 @@ const updatePassword = async () => {
         passwordResetStore.$reset();
       })
       .catch((error) => {
-        if (error.response.status === 422) {
+        if (error.response.status === 400) {
           backErrorsStore.errors = isBackEndErrors(error.response);
           passwordResetStore.password = "";
           passwordResetStore.passwordConfirmation = "";

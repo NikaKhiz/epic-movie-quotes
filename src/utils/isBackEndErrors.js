@@ -2,6 +2,7 @@ export const isBackEndErrors = (response) => {
   const errors = {
     name: [],
     email: [],
+    password: [],
   };
   if (response.data.errors) {
     for (const error in response.data.errors) {
