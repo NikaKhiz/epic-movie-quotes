@@ -2,7 +2,7 @@ import axios from "@/plugins/axios";
 
 export const register = async (name, email, password, passwordConfirmation) => {
   const response = await axios.post(
-    "/register",
+    "/api/register",
     JSON.stringify({
       name,
       email,

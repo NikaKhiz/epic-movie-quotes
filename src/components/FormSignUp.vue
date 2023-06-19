@@ -3,6 +3,8 @@ import { useModalStore } from "@/stores/modalStore.js";
 import { useRegisterStore } from "@/stores/registerStore.js";
 import { toggleModal } from "@/utils/toggleModal.js";
 import { useBackErrorsStore } from "@/stores/backEndValidationStore.js";
+import { register } from "@/services/api/auth.js";
+import { isBackEndErrors } from "@/utils/isBackEndErrors.js";
 import FormMain from "@/components/FormMain.vue";
 import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
@@ -13,13 +15,32 @@ import FormFields from "@/components/FormFields.vue";
 import FormHeading from "@/components/FormHeading.vue";
 import FormFooter from "@/components/FormFooter.vue";
 import InputText from "@/components/ui/InputText.vue";
-
+import axios from "@/plugins/axios";
 const backErrorsStore = useBackErrorsStore();
 const modalStore = useModalStore();
 const registerStore = useRegisterStore();
 
 const signUp = () => {
-  //signUp
+  const { name, email, password, passwordConfirmation } = registerStore;
+  axios.get("sanctum/csrf-cookie").then(() => {
+    register(name, email, password, passwordConfirmation)
+      .then((response) => {
+        if (response.status === 204) {
+          toggleModal(modalStore, "emailVerification");
+          registerStore.$reset();
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 422) {
+          backErrorsStore.errors = isBackEndErrors(error.response);
+          registerStore.password = "";
+          registerStore.passwordConfirmation = "";
+          setTimeout(() => {
+            backErrorsStore.$reset();
+          }, 3000);
+        }
+      });
+  });
 };
 </script>
 <template>
