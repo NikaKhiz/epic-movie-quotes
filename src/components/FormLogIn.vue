@@ -25,6 +25,7 @@ const signIn = async () => {
     login(loginStore.email, loginStore.password)
       .then((response) => {
         if (response.status === 204) {
+          toggleModal(modalStore, "");
           loginStore.$reset();
         }
       })
