@@ -13,6 +13,11 @@ export const register = async (name, email, password, passwordConfirmation) => {
   return response;
 };
 
+export const verifyEmail = async (verificationUrl) => {
+  const response = await axios.get(verificationUrl);
+  return response;
+};
+
 export const login = async (email, password) => {
   const response = await axios.post(
     "/login",
