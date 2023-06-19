@@ -43,10 +43,9 @@ const updatePassword = async () => {
   <FormMain @submit="updatePassword">
     <FormContainer>
       <FormHeading>
-        <template #heading>Forgot password?</template>
+        <template #heading>Create new password</template>
         <template #sub-heading>
-          Enter the email and we’ll send an email with instructions to reset
-          your password
+          Your new password must be different from previous used passwords
         </template>
       </FormHeading>
       <FormFields>
@@ -56,7 +55,7 @@ const updatePassword = async () => {
           name="password"
           label="password"
           rules="required|alpha_numeric|min:8|max:15"
-          placeholder="Password"
+          placeholder="At least 8 & max.15 lower case characters"
           :backEndError="backErrorsStore.errors"
           v-model="passwordResetStore.password"
         />
