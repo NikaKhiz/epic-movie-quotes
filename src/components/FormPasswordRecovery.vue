@@ -2,7 +2,9 @@
 import { useModalStore } from "@/stores/modalStore";
 import { toggleModal } from "@/utils/toggleModal.js";
 import { useBackErrorsStore } from "@/stores/backEndValidationStore.js";
+import { recoverPassword } from "@/services/api/auth.js";
 import { useRecoveryStore } from "@/stores/passwordRecoveryStore.js";
+import { isBackEndErrors } from "@/utils/isBackEndErrors.js";
 import FormMain from "@/components/FormMain.vue";
 import ButtonBack from "@/components/ui/buttons/ButtonBack.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
@@ -11,17 +13,31 @@ import FormFields from "@/components/FormFields.vue";
 import FormHeading from "@/components/FormHeading.vue";
 import FormFooter from "@/components/FormFooter.vue";
 import InputText from "@/components/ui/InputText.vue";
+import axios from "@/plugins/axios";
 
 const modalStore = useModalStore();
 const backErrorsStore = useBackErrorsStore();
-const passwordRecoveryStore = useRecoveryStore();
+const recoveryStore = useRecoveryStore();
 
-const recoverPassword = () => {
-  // recoverPassword
+const sendPasswordRecoveryLink = () => {
+  const { email } = recoveryStore;
+  axios.get("sanctum/csrf-cookie").then(() => {
+    recoverPassword(email)
+      .then(() => {
+        toggleModal(modalStore, "passwordRecoveryNotification");
+        recoveryStore.$reset();
+      })
+      .catch((error) => {
+        backErrorsStore.errors = isBackEndErrors(error.response);
+        setTimeout(() => {
+          backErrorsStore.$reset();
+        }, 3000);
+      });
+  });
 };
 </script>
 <template>
-  <FormMain @submit="recoverPassword">
+  <FormMain @submit="sendPasswordRecoveryLink">
     <FormContainer>
       <FormHeading>
         <template #heading>Forgot password?</template>
@@ -38,7 +54,7 @@ const recoverPassword = () => {
           rules="required|email"
           placeholder="Enter your email"
           :backEndError="backErrorsStore.errors"
-          v-model="passwordRecoveryStore.email"
+          v-model="recoveryStore.email"
         />
       </FormFields>
       <ButtonPrimary> Send instructions </ButtonPrimary>

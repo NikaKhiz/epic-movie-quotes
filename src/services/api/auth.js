@@ -2,7 +2,7 @@ import axios from "@/plugins/axios";
 
 export const register = async (name, email, password, passwordConfirmation) => {
   const response = await axios.post(
-    "/register",
+    "/api/register",
     JSON.stringify({
       name,
       email,
@@ -13,9 +13,14 @@ export const register = async (name, email, password, passwordConfirmation) => {
   return response;
 };
 
+export const verifyEmail = async (verificationUrl) => {
+  const response = await axios.get(verificationUrl);
+  return response;
+};
+
 export const login = async (email, password) => {
   const response = await axios.post(
-    "/login",
+    "/api/login",
     JSON.stringify({
       email,
       password,
@@ -26,9 +31,27 @@ export const login = async (email, password) => {
 
 export const recoverPassword = async (email) => {
   const response = await axios.post(
-    "/forgot-password",
+    "/api/forgot-password",
     JSON.stringify({
       email,
+    })
+  );
+  return response;
+};
+
+export const resetPassword = async (
+  email,
+  token,
+  password,
+  passwordConfirmation
+) => {
+  const response = await axios.post(
+    "/api/reset-password",
+    JSON.stringify({
+      email,
+      token,
+      password,
+      password_confirmation: passwordConfirmation,
     })
   );
   return response;
