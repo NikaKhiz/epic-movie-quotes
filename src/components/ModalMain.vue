@@ -5,9 +5,11 @@ import FormSignUp from "@/components/FormSignUp.vue";
 import FormLogIn from "@/components/FormLogIn.vue";
 import FormPasswordRecovery from "@/components/FormPasswordRecovery.vue";
 import FormPasswordReset from "@/components/FormPasswordReset.vue";
+import NotificationVerification from "@/components/notification/NotificationVerification.vue";
 const modalStore = useModalStore();
 const availableDialogs = {
   signUp: FormSignUp,
+  emailVerification: NotificationVerification,
   logIn: FormLogIn,
   passwordRecovery: FormPasswordRecovery,
   passwordReset: FormPasswordReset,
