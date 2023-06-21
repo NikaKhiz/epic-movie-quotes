@@ -9,6 +9,7 @@ import NotificationVerification from "@/components/notification/NotificationVeri
 import NotificationAccauntActivated from "@/components/notification/NotificationAccauntActivated.vue";
 import NotificationPasswordRecovery from "@/components/notification/NotificationPasswordRecovery.vue";
 import NotificationPasswordReset from "@/components/notification/NotificationPasswordReset.vue";
+import NotificationExpired from "@/components/notification/NotificationExpired.vue";
 
 const modalStore = useModalStore();
 const availableDialogs = {
@@ -17,6 +18,7 @@ const availableDialogs = {
   accauntActivated: NotificationAccauntActivated,
   logIn: FormLogIn,
   passwordRecovery: FormPasswordRecovery,
+  linkExpiration: NotificationExpired,
   passwordRecoveryNotification: NotificationPasswordRecovery,
   passwordReset: FormPasswordReset,
   passwordResetNotification: NotificationPasswordReset,
