@@ -6,14 +6,14 @@ import NotificationHeader from "@/components/notification/NotificationHeader.vue
 import NotificationBody from "@/components/notification/NotificationBody.vue";
 import NotificationButtons from "@/components/notification/NotificationButtons.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
-import IconSent from "@/components/icons/IconSent.vue";
+import IconSuccess from "@/components/icons/IconSuccess.vue";
 
 const modalStore = useModalStore();
 </script>
 <template>
   <NotificationContainer class="py-12 px-4 md:px-16">
     <NotificationHeader>
-      <template #notification-image><IconSent /></template>
+      <template #notification-image><IconSuccess /></template>
       <template #notification-heading>Thank you!</template>
     </NotificationHeader>
     <NotificationBody>
