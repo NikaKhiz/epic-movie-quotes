@@ -5,12 +5,23 @@ import FormSignUp from "@/components/FormSignUp.vue";
 import FormLogIn from "@/components/FormLogIn.vue";
 import FormPasswordRecovery from "@/components/FormPasswordRecovery.vue";
 import FormPasswordReset from "@/components/FormPasswordReset.vue";
+import NotificationVerification from "@/components/notification/NotificationVerification.vue";
+import NotificationAccauntActivated from "@/components/notification/NotificationAccauntActivated.vue";
+import NotificationPasswordRecovery from "@/components/notification/NotificationPasswordRecovery.vue";
+import NotificationPasswordReset from "@/components/notification/NotificationPasswordReset.vue";
+import NotificationExpired from "@/components/notification/NotificationExpired.vue";
+
 const modalStore = useModalStore();
 const availableDialogs = {
   signUp: FormSignUp,
+  emailVerification: NotificationVerification,
+  accauntActivated: NotificationAccauntActivated,
   logIn: FormLogIn,
   passwordRecovery: FormPasswordRecovery,
+  linkExpiration: NotificationExpired,
+  passwordRecoveryNotification: NotificationPasswordRecovery,
   passwordReset: FormPasswordReset,
+  passwordResetNotification: NotificationPasswordReset,
 };
 const selectedComponent = computed(() => {
   return availableDialogs[modalStore.activeDialog];
