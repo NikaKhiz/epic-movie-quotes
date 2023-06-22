@@ -5,6 +5,7 @@ import { useBackErrorsStore } from "@/stores/backEndValidationStore.js";
 import { useLoginStore } from "@/stores/loginStore.js";
 import { login } from "@/services/api/auth";
 import { isBackEndErrors } from "@/utils/isBackEndErrors.js";
+import { googleRedirect } from "@/services/api/oauth.js";
 import FormMain from "@/components/FormMain.vue";
 import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
@@ -40,6 +41,14 @@ const signIn = async () => {
           backErrorsStore.$reset();
         }, 3000);
       });
+  });
+};
+
+const googleAuth = () => {
+  googleRedirect().then((response) => {
+    if (response.data.url) {
+      window.location.href = response.data.url;
+    }
   });
 };
 </script>
@@ -88,7 +97,7 @@ const signIn = async () => {
         </div>
         <div class="my-2 flex flex-col gap-4">
           <ButtonPrimary>Sign in</ButtonPrimary>
-          <ButtonSecondary type="button">
+          <ButtonSecondary type="button" @click="googleAuth">
             <IconGmail />
             <span>Sign in with Google</span>
           </ButtonSecondary>
