@@ -30,14 +30,10 @@ const signIn = async () => {
         }
       })
       .catch((error) => {
-        if (
-          error.response.status === 400 ||
-          error.response.status === 401 ||
-          error.response.status === 422
-        ) {
-          backErrorsStore.errors = isBackEndErrors(error.response);
-        } else if (error.response.status === 403) {
+        if (error.response.status === 403) {
           toggleModal(modalStore, "emailVerification");
+        } else {
+          backErrorsStore.errors = isBackEndErrors(error.response);
         }
         loginStore.password = "";
         setTimeout(() => {
