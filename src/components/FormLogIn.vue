@@ -30,11 +30,14 @@ const signIn = async () => {
         }
       })
       .catch((error) => {
-        if (error.response.status === 400 || error.response.status === 401) {
+        if (
+          error.response.status === 400 ||
+          error.response.status === 401 ||
+          error.response.status === 422
+        ) {
           backErrorsStore.errors = isBackEndErrors(error.response);
         } else if (error.response.status === 403) {
-          backErrorsStore.errors = isBackEndErrors(error.response);
-          // in case of no verified , we dont need to show error , just open email veriication notification
+          toggleModal(modalStore, "emailVerification");
         }
         loginStore.password = "";
         setTimeout(() => {

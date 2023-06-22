@@ -1,17 +1,26 @@
 <script setup>
 import { useModalStore } from "@/stores/modalStore.js";
 import { toggleModal } from "@/utils/toggleModal";
+import { useEmailVerificationStore } from "@/stores/emailVerificationStore.js";
 import NotificationContainer from "@/components/notification/NotificationContainer.vue";
 import NotificationHeader from "@/components/notification/NotificationHeader.vue";
 import NotificationBody from "@/components/notification/NotificationBody.vue";
 import NotificationButtons from "@/components/notification/NotificationButtons.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
 import IconExpiration from "@/components/icons/IconExpiration.vue";
+import axios from "@/plugins/axios";
 
+const emailVerificationStore = useEmailVerificationStore();
 const modalStore = useModalStore();
 const requestLink = () => {
-  toggleModal(modalStore, "emailVerification");
-  //   send verification link
+  const { getEmailToVerify } = emailVerificationStore;
+  axios
+    .post(`/api/reverify-email`, {
+      email: getEmailToVerify,
+    })
+    .then(() => {
+      toggleModal(modalStore, "emailVerification");
+    });
 };
 </script>
 <template>
