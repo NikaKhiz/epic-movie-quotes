@@ -5,6 +5,7 @@ import { useBackErrorsStore } from "@/stores/backEndValidationStore.js";
 import { useLoginStore } from "@/stores/loginStore.js";
 import { login } from "@/services/api/auth";
 import { isBackEndErrors } from "@/utils/isBackEndErrors.js";
+import { authViaGoogle } from "@/utils/googleAuthentication.js";
 import FormMain from "@/components/FormMain.vue";
 import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
@@ -88,7 +89,7 @@ const signIn = async () => {
         </div>
         <div class="my-2 flex flex-col gap-4">
           <ButtonPrimary>Sign in</ButtonPrimary>
-          <ButtonSecondary type="button">
+          <ButtonSecondary type="button" @click="authViaGoogle">
             <IconGmail />
             <span>Sign in with Google</span>
           </ButtonSecondary>

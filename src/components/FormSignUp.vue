@@ -5,6 +5,7 @@ import { toggleModal } from "@/utils/toggleModal.js";
 import { useBackErrorsStore } from "@/stores/backEndValidationStore.js";
 import { register } from "@/services/api/auth.js";
 import { isBackEndErrors } from "@/utils/isBackEndErrors.js";
+import { authViaGoogle } from "@/utils/googleAuthentication.js";
 import FormMain from "@/components/FormMain.vue";
 import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
@@ -91,7 +92,7 @@ const signUp = () => {
         />
         <div class="my-2 flex flex-col gap-4">
           <ButtonPrimary>Get started</ButtonPrimary>
-          <ButtonSecondary type="button">
+          <ButtonSecondary type="button" @click="authViaGoogle">
             <IconGmail />
             <span>Sign up with Google</span>
           </ButtonSecondary>
