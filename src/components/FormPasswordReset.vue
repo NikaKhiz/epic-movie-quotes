@@ -14,14 +14,19 @@ import FormHeading from "@/components/FormHeading.vue";
 import FormFooter from "@/components/FormFooter.vue";
 import InputText from "@/components/ui/InputText.vue";
 import axios from "@/plugins/axios";
+
 const modalStore = useModalStore();
 const backErrorsStore = useBackErrorsStore();
 const passwordResetStore = usePasswordResetStore();
 
 const updatePassword = async () => {
-  const { email, token, password, passwordConfirmation } = passwordResetStore;
   axios.get("sanctum/csrf-cookie").then(() => {
-    resetPassword(email, token, password, passwordConfirmation)
+    resetPassword(
+      passwordResetStore.email,
+      passwordResetStore.token,
+      passwordResetStore.password,
+      passwordResetStore.passwordConfirmation
+    )
       .then(() => {
         toggleModal(modalStore, "passwordResetNotification");
         passwordResetStore.$reset();

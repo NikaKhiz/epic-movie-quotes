@@ -17,14 +17,20 @@ import FormHeading from "@/components/FormHeading.vue";
 import FormFooter from "@/components/FormFooter.vue";
 import InputText from "@/components/ui/InputText.vue";
 import axios from "@/plugins/axios";
+
 const backErrorsStore = useBackErrorsStore();
 const modalStore = useModalStore();
+
 const registerStore = useRegisterStore();
 
 const signUp = () => {
-  const { name, email, password, passwordConfirmation } = registerStore;
   axios.get("sanctum/csrf-cookie").then(() => {
-    register(name, email, password, passwordConfirmation)
+    register(
+      registerStore.name,
+      registerStore.email,
+      registerStore.password,
+      registerStore.passwordConfirmation
+    )
       .then((response) => {
         if (response.status === 204) {
           toggleModal(modalStore, "emailVerification");
