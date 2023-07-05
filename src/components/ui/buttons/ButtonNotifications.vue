@@ -2,14 +2,16 @@
 import IconBell from "@/components/icons/IconBell.vue";
 import { activateModal } from "@/utils/toggleAuthModals";
 import { useAuthModalStore } from "@/stores/authModalStore";
-import { ref, inject, computed } from "vue";
+import { ref, computed } from "vue";
+import { useNotificationsStore } from "@/stores/notificationsStore";
 
-const notifications = inject("notifications");
+const notificationsStore = useNotificationsStore();
 const authModalStore = useAuthModalStore();
+const { notifications } = notificationsStore;
 
 const recentNotifications = ref([]);
 const hasNewNotifications = computed(() => {
-  notifications.value.filter((elem) => {
+  notifications.filter((elem) => {
     if (!elem.seen) {
       recentNotifications.value.push(elem);
     }

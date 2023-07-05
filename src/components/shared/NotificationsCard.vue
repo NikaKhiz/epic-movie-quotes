@@ -1,15 +1,16 @@
 <script setup>
-import { computed, inject } from "vue";
+import { computed } from "vue";
 import { useAuthModalStore } from "@/stores/authModalStore";
 import { deactivateModal } from "@/utils/toggleAuthModals";
-
+import { useNotificationsStore } from "@/stores/notificationsStore";
 import NotificationsCardItem from "@/components/shared/NotificationsCardItem.vue";
 
-const notifications = inject("notifications");
 const authModalStore = useAuthModalStore();
+const notificationsStore = useNotificationsStore();
+const { notifications } = notificationsStore;
 
 const hasNotifications = computed(() => {
-  return notifications.value.length > 0;
+  return notifications.length > 0;
 });
 const onOutsideClick = () => {
   deactivateModal(authModalStore);
