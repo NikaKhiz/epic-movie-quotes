@@ -29,9 +29,19 @@ const router = createRouter({
       beforeEnter: handleGoogleCallback,
     },
     {
+      path: "/profile",
+      name: "profile",
+      component: null,
+    },
+    {
       path: "/movies",
       name: "movies",
       component: MoviesView,
+    },
+    {
+      path: "/news-feed",
+      name: "news-feed",
+      component: null,
     },
   ],
 });
