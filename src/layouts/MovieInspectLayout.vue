@@ -5,8 +5,7 @@
       <slot name="aside"></slot>
       <div class="flex-1 max-w-[1400px]">
         <div class="flex flex-col gap-5">
-          <slot name="navigation"></slot>
-          <slot name="list"></slot>
+          <slot name="content"></slot>
         </div>
       </div>
     </div>

@@ -1,23 +1,29 @@
 <script setup>
-import MoviesLayout from "@/layouts/MoviesLayout.vue";
+import MovieInspectLayout from "@/layouts/MovieInspectLayout.vue";
+import MovieContent from "@/components/movies/MovieContent.vue";
 import HeaderAuthenticated from "@/components/shared/HeaderAuthenticated.vue";
-import NotificationsCard from "@/components/shared/NotificationsCard.vue";
 import NavigationUser from "@/components/shared/NavigationUser.vue";
-import MoviesList from "@/components/movies/MoviesList.vue";
+import NotificationsCard from "@/components/shared/NotificationsCard.vue";
+
+const props = defineProps({
+  movieId: {
+    type: String,
+  },
+});
 </script>
 <template>
-  <MoviesLayout>
+  <MovieInspectLayout>
     <template #header>
       <HeaderAuthenticated />
     </template>
     <template #aside>
       <NavigationUser class="hidden md:flex" />
     </template>
-    <template #list>
-      <MoviesList />
+    <template #content>
+      <MovieContent :movieId="props.movieId" />
     </template>
     <template #modals>
       <NotificationsCard />
     </template>
-  </MoviesLayout>
+  </MovieInspectLayout>
 </template>

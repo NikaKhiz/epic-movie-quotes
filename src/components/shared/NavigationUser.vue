@@ -15,7 +15,7 @@ const newsFeed = computed(() => {
   return route.name === "news-feed";
 });
 const movies = computed(() => {
-  return route.name === "movies" || route.name === "current-inspect";
+  return route.name === "movies" || route.name === "movie-inspect";
 });
 const profile = computed(() => {
   return route.name === "profile";
