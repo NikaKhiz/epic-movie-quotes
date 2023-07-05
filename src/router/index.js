@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LandingView from "@/views/LandingView.vue";
+import MoviesView from "@/views/MoviesView.vue";
 import { emailVerification } from "@/utils/emailVerification.js";
 import { openResetPasswordForm } from "@/utils/openResetPasswordForm.js";
 import { handleGoogleCallback } from "@/utils/googleAuthentication.js";
@@ -26,6 +27,11 @@ const router = createRouter({
       path: "/auth/google/callback",
       name: "auth-google",
       beforeEnter: handleGoogleCallback,
+    },
+    {
+      path: "/movies",
+      name: "movies",
+      component: MoviesView,
     },
   ],
 });
