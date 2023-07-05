@@ -1,7 +1,12 @@
 <script setup>
 import IconBell from "@/components/icons/IconBell.vue";
+import { activateModal } from "@/utils/toggleAuthModals";
+import { useAuthModalStore } from "@/stores/authModalStore";
 import { ref, inject, computed } from "vue";
+
 const notifications = inject("notifications");
+const authModalStore = useAuthModalStore();
+
 const recentNotifications = ref([]);
 const hasNewNotifications = computed(() => {
   notifications.value.filter((elem) => {
@@ -13,7 +18,10 @@ const hasNewNotifications = computed(() => {
 });
 </script>
 <template>
-  <button class="w-6 h-6 md:w-8 md:h-8 relative flex items-center">
+  <button
+    @click="activateModal(authModalStore, 'modalNotifications')"
+    class="w-6 h-6 md:w-8 md:h-8 relative flex items-center"
+  >
     <IconBell class="w-full block object-cover" />
     <div
       v-if="hasNewNotifications"
