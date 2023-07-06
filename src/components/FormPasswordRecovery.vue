@@ -20,13 +20,15 @@ const backErrorsStore = useBackErrorsStore();
 const recoveryStore = useRecoveryStore();
 
 const sendPasswordRecoveryLink = () => {
+  const { email } = recoveryStore;
   axios.get("sanctum/csrf-cookie").then(() => {
-    recoverPassword(recoveryStore.email)
+    recoverPassword(email)
       .then(() => {
         toggleModal(modalStore, "passwordRecoveryNotification");
         recoveryStore.$reset();
       })
       .catch((error) => {
+        console.log(error);
         backErrorsStore.errors = isBackEndErrors(error.response);
         setTimeout(() => {
           backErrorsStore.$reset();

@@ -1,11 +1,12 @@
 import { defineStore } from "pinia";
-import { computed, ref } from "vue";
-export const useEmailVerificationStore = defineStore(
-  "emailVerificationStore",
-  () => {
-    const emailToVerify = ref("");
-    const getEmailToVerify = computed(() => emailToVerify.value);
 
-    return { emailToVerify, getEmailToVerify };
-  }
-);
+export const useEmailVerificationStore = defineStore("emailVerificationStore", {
+  state: () => {
+    return {
+      emailToVerify: "",
+    };
+  },
+  getters: {
+    getEmailToVerify: (state) => state.emailToVerify,
+  },
+});

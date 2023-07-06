@@ -42,6 +42,10 @@ module.exports = {
       borderWidth: {
         1: "1px",
       },
+      backgroundImage: () => ({
+        gradientPrimary:
+          "linear-gradient(187.16deg,#181623 0.07%,#191725 51.65%,#0D0B14 98.75%)",
+      }),
     },
   },
   plugins: [],

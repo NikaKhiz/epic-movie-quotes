@@ -24,13 +24,10 @@ const modalStore = useModalStore();
 const registerStore = useRegisterStore();
 
 const signUp = () => {
+  const { name, email, password, passwordConfirmation } = registerStore;
+
   axios.get("sanctum/csrf-cookie").then(() => {
-    register(
-      registerStore.name,
-      registerStore.email,
-      registerStore.password,
-      registerStore.passwordConfirmation
-    )
+    register(name, email, password, passwordConfirmation)
       .then((response) => {
         if (response.status === 204) {
           toggleModal(modalStore, "emailVerification");
