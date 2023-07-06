@@ -1,6 +1,7 @@
 <script setup>
 import MovieInspectLayout from "@/layouts/MovieInspectLayout.vue";
 import MovieContent from "@/components/movies/MovieContent.vue";
+import ModalAddMovie from "@/components/movies/ModalAddMovie.vue";
 import HeaderAuthenticated from "@/components/shared/HeaderAuthenticated.vue";
 import NavigationUser from "@/components/shared/NavigationUser.vue";
 import NotificationsCard from "@/components/shared/NotificationsCard.vue";
@@ -24,6 +25,7 @@ const props = defineProps({
     </template>
     <template #modals>
       <NotificationsCard />
+      <ModalAddMovie />
     </template>
   </MovieInspectLayout>
 </template>

@@ -2,6 +2,8 @@
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
 import IconAdd from "@/components/icons/IconAdd.vue";
 import MovieQuoteListItem from "@/components/movies/MovieQuoteListItem.vue";
+import { activateModal } from "@/utils/toggleAuthModals.js";
+import { useAuthModalStore } from "@/stores/authModalStore.js";
 import { computed } from "vue";
 
 const props = defineProps({
@@ -11,6 +13,8 @@ const props = defineProps({
     default: () => [],
   },
 });
+const authModalStore = useAuthModalStore();
+
 const totalQuotes = computed(() => {
   return props.quotes.length;
 });
@@ -24,7 +28,10 @@ const totalQuotes = computed(() => {
     <div
       class="border-1 order-2 md:hidden border-neutralGray border-opacity-30"
     ></div>
-    <ButtonPrimary class="max-w-max min-w-max order-1 md:order-3">
+    <ButtonPrimary
+      @click="activateModal(authModalStore, 'modalAddMovie')"
+      class="max-w-max min-w-max order-1 md:order-3"
+    >
       <div class="flex items-center gap-2">
         <IconAdd />
         <span>Add movie</span>
