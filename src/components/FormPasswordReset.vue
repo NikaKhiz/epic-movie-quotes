@@ -19,14 +19,10 @@ const modalStore = useModalStore();
 const backErrorsStore = useBackErrorsStore();
 const passwordResetStore = usePasswordResetStore();
 
-const updatePassword = async () => {
+const updatePassword = () => {
+  const { email, token, password, passwordConfirmation } = passwordResetStore;
   axios.get("sanctum/csrf-cookie").then(() => {
-    resetPassword(
-      passwordResetStore.email,
-      passwordResetStore.token,
-      passwordResetStore.password,
-      passwordResetStore.passwordConfirmation
-    )
+    resetPassword(email, token, password, passwordConfirmation)
       .then(() => {
         toggleModal(modalStore, "passwordResetNotification");
         passwordResetStore.$reset();
