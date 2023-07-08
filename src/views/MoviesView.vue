@@ -3,6 +3,7 @@ import MoviesLayout from "@/layouts/MoviesLayout.vue";
 import HeaderAuthenticated from "@/components/shared/HeaderAuthenticated.vue";
 import NotificationsCard from "@/components/shared/NotificationsCard.vue";
 import NavigationUser from "@/components/shared/NavigationUser.vue";
+import MoviesListHeader from "@/components/movies/MoviesListHeader.vue";
 import MoviesList from "@/components/movies/MoviesList.vue";
 </script>
 <template>
@@ -12,6 +13,9 @@ import MoviesList from "@/components/movies/MoviesList.vue";
     </template>
     <template #aside>
       <NavigationUser class="hidden md:flex" />
+    </template>
+    <template #navigation>
+      <MoviesListHeader />
     </template>
     <template #list>
       <MoviesList />
