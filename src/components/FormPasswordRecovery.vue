@@ -28,7 +28,6 @@ const sendPasswordRecoveryLink = () => {
         recoveryStore.$reset();
       })
       .catch((error) => {
-        console.log(error);
         backErrorsStore.errors = isBackEndErrors(error.response);
         setTimeout(() => {
           backErrorsStore.$reset();

@@ -1,20 +1,21 @@
 <script setup>
+import { useMoviesStore } from "@/stores/moviesStore.js";
+import { onMounted } from "vue";
+import { getMovie } from "@/services/api/movies.js";
 import MovieInformation from "@/components/movies/MovieInformation.vue";
 import MovieQuotesList from "@/components/movies/MovieQuotesList.vue";
-import { useMoviesStore } from "@/stores/moviesStore";
 
 const props = defineProps({
   movieId: {
     type: String,
-    required: true,
   },
 });
-
 const moviesStore = useMoviesStore();
-const currentMovie = moviesStore.movies.find(
-  (movie) => movie.id == props.movieId
-);
-const { quotes } = currentMovie;
+onMounted(() => {
+  getMovie(props.movieId).then((response) => {
+    moviesStore.currentMovie = response.data.movie;
+  });
+});
 </script>
 <template>
   <div class="flex flex-col">
@@ -23,7 +24,7 @@ const { quotes } = currentMovie;
     >
       movie description
     </p>
-    <MovieInformation :currentMovie="currentMovie" />
-    <MovieQuotesList :quotes="quotes" />
+    <MovieInformation :currentMovie="moviesStore.currentMovie" />
+    <MovieQuotesList :quotes="moviesStore.currentMovie.quotes" />
   </div>
 </template>
