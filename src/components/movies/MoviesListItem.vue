@@ -9,9 +9,8 @@ const props = defineProps({
     default: () => {},
   },
 });
-
-const movieComments = computed(() => {
-  return props.movie.quotes.length;
+const movieQuotes = computed(() => {
+  return props.movie.quotes && props.movie.quotes.length;
 });
 </script>
 
@@ -19,15 +18,19 @@ const movieComments = computed(() => {
   <div
     class="font-medium text-neutralWhite rounded-md overflow-hidden flex flex-col gap-4"
   >
-    <div class="w-full">
-      <img :src="movie.movieImg" alt="" class="block w-full object-cover" />
+    <div class="w-full h-[400px]">
+      <img
+        :src="movie.thumbnail"
+        alt="movieImg"
+        class="block w-full h-full object-cover"
+      />
     </div>
     <div class="flex flex-col gap-4">
       <router-link :to="`/movies/${props.movie.id}`" class="uppercase text-2xl">
         {{ movie.title }} <span>({{ movie.released }})</span>
       </router-link>
       <div class="text-xl flex items-center gap-2">
-        <p>{{ movieComments }}</p>
+        <p>{{ movieQuotes ?? 0 }}</p>
         <div class="w-6 h-6 flex items-center justify-center">
           <IconCommented class="block w-full object-cover" />
         </div>

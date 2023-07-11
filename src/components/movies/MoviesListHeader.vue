@@ -1,12 +1,14 @@
 <script setup>
+import { computed, ref } from "vue";
+import { useMoviesStore } from "@/stores/moviesStore.js";
+import { activateModal } from "@/utils/toggleAuthModals.js";
+import { useAuthModalStore } from "@/stores/authModalStore.js";
 import ButtonSearchBy from "@/components/ui/buttons/ButtonSearchBy.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
 import IconAdd from "@/components/icons/IconAdd.vue";
 import IconSearchBlue from "@/components/icons/IconSearchBlue.vue";
-import { computed, ref } from "vue";
 
-import { useMoviesStore } from "@/stores/moviesStore.js";
-
+const authModalStore = useAuthModalStore();
 const moviesStore = useMoviesStore();
 const totalMovies = computed(() => {
   return moviesStore.movies.length;
@@ -42,7 +44,10 @@ const onOutsideClick = () => {
           placeholder="Enter @ to search movies, Enter # to search quotes"
         />
       </div>
-      <ButtonPrimary class="min-w-max">
+      <ButtonPrimary
+        @click="activateModal(authModalStore, 'modalAddMovie')"
+        class="min-w-max"
+      >
         <div class="flex items-center gap-2">
           <IconAdd />
           <span>Add movie</span>

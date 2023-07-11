@@ -1,10 +1,10 @@
 <script setup>
-import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
-import IconAdd from "@/components/icons/IconAdd.vue";
-import MovieQuoteListItem from "@/components/movies/MovieQuoteListItem.vue";
 import { activateModal } from "@/utils/toggleAuthModals.js";
 import { useAuthModalStore } from "@/stores/authModalStore.js";
 import { computed } from "vue";
+import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
+import IconAdd from "@/components/icons/IconAdd.vue";
+import MovieQuoteListItem from "@/components/movies/MovieQuoteListItem.vue";
 
 const props = defineProps({
   quotes: {
@@ -29,12 +29,12 @@ const totalQuotes = computed(() => {
       class="border-1 order-2 md:hidden border-neutralGray border-opacity-30"
     ></div>
     <ButtonPrimary
-      @click="activateModal(authModalStore, 'modalAddMovie')"
+      @click="activateModal(authModalStore, 'modalAddQuote')"
       class="max-w-max min-w-max order-1 md:order-3"
     >
       <div class="flex items-center gap-2">
         <IconAdd />
-        <span>Add movie</span>
+        <span>Add Quote</span>
       </div>
     </ButtonPrimary>
   </div>
