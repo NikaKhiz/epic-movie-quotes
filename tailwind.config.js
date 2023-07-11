@@ -20,6 +20,7 @@ module.exports = {
         grapeRed: "#B80D0F",
         dullRed: "#EC4C57",
         dullerRed: "#F3426C",
+        neutralViolet: "#9747FF66",
       },
       colors: {
         neutralBlack: "#222030",
@@ -38,6 +39,7 @@ module.exports = {
         grapeRed: "#B80D0F",
         dullRed: "#DC3545",
         dullerRed: "#F3426C",
+        neutralViolet: "#9747FF66",
       },
       borderWidth: {
         1: "1px",
