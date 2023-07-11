@@ -4,6 +4,7 @@ export const useMoviesStore = defineStore("moviesStore", {
   state: () => {
     return {
       movies: [],
+      currentMovie: {},
     };
   },
 });
