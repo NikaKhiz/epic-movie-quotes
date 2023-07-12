@@ -2,7 +2,7 @@
 import IconPhoto from "@/components/icons/IconPhoto.vue";
 import { Field, ErrorMessage, useField } from "vee-validate";
 import { computed, ref } from "vue";
-// import axios from "@/plugins/axios";
+
 const props = defineProps({
   type: {
     type: String,
@@ -14,10 +14,6 @@ const props = defineProps({
     required: true,
   },
   rules: {
-    type: String,
-    required: false,
-  },
-  file: {
     type: String,
     required: false,
   },

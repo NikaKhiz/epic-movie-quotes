@@ -1,6 +1,7 @@
 <script setup>
 import { Field, ErrorMessage, useField } from "vee-validate";
 import { computed } from "vue";
+import FormFieldBackEndError from "@/components/FormFieldBackEndError.vue";
 
 const props = defineProps({
   name: {
@@ -26,10 +27,8 @@ const props = defineProps({
     required: false,
     default: "",
   },
-  required: {
-    type: Boolean,
-    required: false,
-    default: false,
+  backEndError: {
+    type: Object,
   },
   modelValue: {
     type: String,
@@ -73,6 +72,10 @@ const hasLang = computed(() => {
         {{ props.lang }}
       </p>
     </div>
+    <FormFieldBackEndError
+      v-if="backEndError[name]"
+      :errors="backEndError[name]"
+    />
     <ErrorMessage
       as="p"
       class="text-dullRed font-normal text-sm"
