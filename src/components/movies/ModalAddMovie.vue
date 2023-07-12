@@ -10,6 +10,7 @@ import { useGenresStore } from "@/stores/genresStore.js";
 import { getGenres } from "@/services/api/genres.js";
 import { getMovies } from "@/services/api/movies.js";
 import { useMoviesStore } from "@/stores/moviesStore.js";
+import { useBackErrorsStore } from "@/stores/backEndValidationStore.js";
 import IconExit from "@/components/icons/IconExit.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
 import InputTextMovie from "@/components/ui/InputTextMovie.vue";
@@ -18,6 +19,8 @@ import InputCheckboxAddGenres from "@/components/ui/InputCheckboxAddGenres.vue";
 import InputTextarea from "@/components/ui/InputTextarea.vue";
 
 const genresStore = useGenresStore();
+const backErrorsStore = useBackErrorsStore();
+
 onMounted(() => {
   getGenres().then((response) => {
     genresStore.genres = response.data.data;
@@ -66,6 +69,7 @@ const createMovie = (values) => {
     getMovies().then((response) => {
       moviesStore.movies = response.data.movies;
     });
+    addMoviesStore.$reset();
   });
 };
 </script>
@@ -121,6 +125,7 @@ const createMovie = (values) => {
                 rules="required|alpha_spaces|min:6|max:255"
                 lang="Eng"
                 placeholder="Movie Name"
+                :backEndError="backErrorsStore.errors"
                 v-model="addMoviesStore.title"
               />
               <InputTextMovie
@@ -128,12 +133,14 @@ const createMovie = (values) => {
                 rules="required|alpha_georgian|min:6|max:255"
                 lang="ქარ"
                 placeholder="ფილმის სახელი"
+                :backEndError="backErrorsStore.errors"
                 v-model="addMoviesStore.title_ka"
               />
               <InputTextMovie
                 name="released"
                 rules="required|numeric|min:4|max:4"
                 placeholder="წელი/Year"
+                :backEndError="backErrorsStore.errors"
                 v-model="addMoviesStore.released"
               />
               <InputCheckboxAddGenres
@@ -146,6 +153,7 @@ const createMovie = (values) => {
                 rules="required|alpha_spaces|min:6|max:255"
                 lang="Eng"
                 placeholder="director"
+                :backEndError="backErrorsStore.errors"
                 v-model="addMoviesStore.director"
               />
               <InputTextMovie
@@ -153,6 +161,7 @@ const createMovie = (values) => {
                 rules="required|alpha_georgian|min:6|max:255"
                 lang="ქარ"
                 placeholder="რეჟისორი"
+                :backEndError="backErrorsStore.errors"
                 v-model="addMoviesStore.director_ka"
               />
               <InputTextarea

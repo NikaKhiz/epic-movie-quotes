@@ -49,6 +49,7 @@ const hasNotError = computed(() => {
         :id="name"
         :rules="rules"
         class="w-full transition-all border-1 border-darkGray text-neutralWhite placeholder:text-neutralWhite bg-transparent py-2 px-3 rounded-md outline-none focus:ring text-lg focus:ring-darkGray focus:ring-opacity-20"
+        :value="modelValue"
         :class="{
           'border-neutralRed': hasError,
           'border-neutralGreen': hasNotError,

@@ -1,10 +1,4 @@
 <script setup>
-import IconExit from "@/components/icons/IconExit.vue";
-import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
-import InputTextMovie from "@/components/ui/InputTextMovie.vue";
-import InputFile from "@/components/ui/InputFile.vue";
-import InputCheckboxGenresEdit from "@/components/ui/InputCheckboxGenresEdit.vue";
-import InputTextarea from "@/components/ui/InputTextarea.vue";
 import { computed, onMounted } from "vue";
 import { Form } from "vee-validate";
 import { useAuthModalStore } from "@/stores/authModalStore.js";
@@ -16,6 +10,13 @@ import { updateMovie } from "@/services/api/movies.js";
 import { useGenresStore } from "@/stores/genresStore.js";
 import { getGenres } from "@/services/api/genres.js";
 import { getMovie } from "@/services/api/movies.js";
+import { useBackErrorsStore } from "@/stores/backEndValidationStore.js";
+import IconExit from "@/components/icons/IconExit.vue";
+import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
+import InputTextMovie from "@/components/ui/InputTextMovie.vue";
+import InputFile from "@/components/ui/InputFile.vue";
+import InputCheckboxGenresEdit from "@/components/ui/InputCheckboxGenresEdit.vue";
+import InputTextarea from "@/components/ui/InputTextarea.vue";
 
 const genresStore = useGenresStore();
 onMounted(() => {
@@ -26,6 +27,7 @@ onMounted(() => {
 const userStore = useUserStore();
 const editMoviesStore = useEditMoviesStore();
 const authModalStore = useAuthModalStore();
+const backErrorsStore = useBackErrorsStore();
 
 const { userName, userImg } = userStore;
 const moviesStore = useMoviesStore();
@@ -55,6 +57,7 @@ const editMovie = (values) => {
     getMovie(editMoviesStore.id).then((response) => {
       moviesStore.currentMovie = response.data.movie;
     });
+    editMoviesStore.$reset();
   });
 };
 </script>
@@ -110,6 +113,7 @@ const editMovie = (values) => {
                 rules="required|alpha_spaces|min:6|max:255"
                 lang="Eng"
                 placeholder="Movie Name"
+                :backEndError="backErrorsStore.errors"
                 v-model="editMoviesStore.title"
               />
               <InputTextMovie
@@ -117,12 +121,14 @@ const editMovie = (values) => {
                 rules="required|alpha_georgian|min:6|max:255"
                 lang="ქარ"
                 placeholder="ფილმის სახელი"
+                :backEndError="backErrorsStore.errors"
                 v-model="editMoviesStore.title_ka"
               />
               <InputTextMovie
                 name="released"
                 rules="required|numeric|min:4|max:4"
                 placeholder="წელი/Year"
+                :backEndError="backErrorsStore.errors"
                 v-model="editMoviesStore.released"
               />
               <InputCheckboxGenresEdit
@@ -135,6 +141,7 @@ const editMovie = (values) => {
                 rules="required|alpha_spaces|min:6|max:255"
                 lang="Eng"
                 placeholder="director"
+                :backEndError="backErrorsStore.errors"
                 v-model="editMoviesStore.director"
               />
               <InputTextMovie
@@ -142,6 +149,7 @@ const editMovie = (values) => {
                 rules="required|alpha_georgian|min:6|max:255"
                 lang="ქარ"
                 placeholder="რეჟისორი"
+                :backEndError="backErrorsStore.errors"
                 v-model="editMoviesStore.director_ka"
               />
               <InputTextarea

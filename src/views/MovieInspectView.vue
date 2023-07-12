@@ -5,6 +5,10 @@ import ModalEditMovie from "@/components/movies/ModalEditMovie.vue";
 import HeaderAuthenticated from "@/components/shared/HeaderAuthenticated.vue";
 import NavigationUser from "@/components/shared/NavigationUser.vue";
 import NotificationsCard from "@/components/shared/NotificationsCard.vue";
+import ModalEditQuote from "@/components/quotes/ModalEditQuote.vue";
+import ModalAddQuote from "@/components/quotes/ModalAddQuote.vue";
+import ModalViewQuote from "@/components/quotes/ModalViewQuote.vue";
+
 const props = defineProps({
   movieId: {
     type: String,
@@ -25,6 +29,9 @@ const props = defineProps({
     <template #modals>
       <NotificationsCard />
       <ModalEditMovie />
+      <ModalViewQuote />
+      <ModalAddQuote />
+      <ModalEditQuote />
     </template>
   </MovieInspectLayout>
 </template>
