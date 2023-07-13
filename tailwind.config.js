@@ -6,6 +6,7 @@ module.exports = {
       textColor: {
         neutralBlack: "#222030",
         darkBlack: "#11101A",
+        mediumBlack: "#24222F",
         darkerBlack: "#000000",
         neutralWhite: "#FFFFFF",
         brownyWhite: "#DDCCAA",
@@ -25,6 +26,7 @@ module.exports = {
       colors: {
         neutralBlack: "#222030",
         darkBlack: "#11101A",
+        mediumBlack: "#24222F",
         darkerBlack: "#000000",
         neutralWhite: "#FFFFFF",
         brownyWhite: "#DDCCAA",
