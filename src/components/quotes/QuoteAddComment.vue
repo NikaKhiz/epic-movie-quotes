@@ -3,9 +3,7 @@ import { useUserStore } from "@/stores/userStore.js";
 import { useAddCommentStore } from "@/stores/addCommentStore.js";
 import { Form } from "vee-validate";
 import { addComment } from "@/services/api/quotes.js";
-import { useMoviesStore } from "@/stores/moviesStore.js";
 import { useQuoteStore } from "@/stores/quoteStore.js";
-import { getMovie } from "@/services/api/movies.js";
 import InputTextAddComment from "@/components/ui/InputTextAddComment.vue";
 import ProfileImageDefault from "@/components/shared/ProfileImageDefault.vue";
 
@@ -17,17 +15,17 @@ const props = defineProps({
 });
 const userStore = useUserStore();
 const addCommentStore = useAddCommentStore();
-const moviesStore = useMoviesStore();
 const quoteStore = useQuoteStore();
 const { userImg, userName } = userStore;
 const addNewComment = () => {
   addComment(addCommentStore.comment, props.quoteId).then(() => {
-    getMovie(moviesStore.currentMovie.id).then((response) => {
-      moviesStore.currentMovie = response.data.movie;
-      const newQuote = moviesStore.currentMovie.quotes.find(
-        (item) => item.id === props.quoteId
-      );
-      quoteStore.$patch(newQuote);
+    quoteStore.comments.push({
+      user: {
+        name: userStore.userName,
+        email: userStore.userEmail,
+        profile_picture: userStore.profile_picture,
+      },
+      comment: addCommentStore.comment,
     });
     addCommentStore.$reset();
   });

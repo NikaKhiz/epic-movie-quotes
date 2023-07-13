@@ -49,7 +49,7 @@ const openEditQuote = () => {
 };
 
 const totalLikes = computed(() => {
-  return quoteStore.likes.length ?? 0;
+  return quoteStore.users ?? 0;
 });
 
 const totalComments = computed(() => {
@@ -132,7 +132,6 @@ const totalComments = computed(() => {
               </div>
               <QuoteStatistics
                 :quoteId="quoteStore.id"
-                :likes="quoteStore.likes"
                 :likesNumber="totalLikes"
                 :commentsNumber="totalComments"
               />

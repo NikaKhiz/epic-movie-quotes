@@ -1,8 +1,5 @@
 <script setup>
-import { useUserStore } from "@/stores/userStore.js";
-import { useMoviesStore } from "@/stores/moviesStore.js";
 import { useQuoteStore } from "@/stores/quoteStore.js";
-import { getMovie } from "@/services/api/movies.js";
 import { likeQuote } from "@/services/api/quotes";
 import IconComment from "@/components/icons/IconComment.vue";
 import IconHeartEmpty from "@/components/icons/IconHeartEmpty.vue";
@@ -11,10 +8,6 @@ import { computed } from "vue";
 const props = defineProps({
   quoteId: {
     type: Number,
-    required: true,
-  },
-  likes: {
-    type: Array,
     required: true,
   },
   likesNumber: {
@@ -28,27 +21,26 @@ const props = defineProps({
     default: 0,
   },
 });
-const userStore = useUserStore();
-const moviesStore = useMoviesStore();
 const quoteStore = useQuoteStore();
 
 const likeTheQuote = () => {
-  likeQuote(props.quoteId).then(() => {
-    getMovie(moviesStore.currentMovie.id).then((response) => {
-      moviesStore.currentMovie = response.data.movie;
-      const newQuote = moviesStore.currentMovie.quotes.find(
-        (item) => item.id === props.quoteId
-      );
-      quoteStore.$patch(newQuote);
-    });
+  likeQuote(props.quoteId).then((response) => {
+    if (response.data.like == true) {
+      quoteStore.$patch({
+        users: quoteStore.users + 1,
+        userLike: true,
+      });
+    } else {
+      quoteStore.$patch({
+        users: quoteStore.users - 1,
+        userLike: false,
+      });
+    }
   });
 };
 
 const hasUserLiked = computed(() => {
-  return props.likes.find(
-    (item) =>
-      item.quote_id === props.quoteId && item.user.name === userStore.userName
-  );
+  return quoteStore.userLike;
 });
 </script>
 <template>
@@ -64,13 +56,13 @@ const hasUserLiked = computed(() => {
     <div class="flex items-center gap-3">
       <span>{{ props.likesNumber }}</span>
       <div class="w-6 md:w-8">
-        <IconHeartFilled
-          v-if="hasUserLiked"
+        <IconHeartEmpty
+          v-if="!hasUserLiked"
           @click="likeTheQuote"
           class="w-full block object-cover cursor-pointer"
         />
-        <IconHeartEmpty
-          v-else
+        <IconHeartFilled
+          v-if="hasUserLiked"
           @click="likeTheQuote"
           class="w-full block object-cover cursor-pointer"
         />

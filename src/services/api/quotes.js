@@ -43,3 +43,8 @@ export const likeQuote = async (quoteId) => {
   const response = await axios.get(`/api/quotes/${quoteId}/like`);
   return response;
 };
+
+export const getLikes = async (quoteId) => {
+  const response = await axios.get(`/api/quotes/${quoteId}/liked`);
+  return response;
+};
