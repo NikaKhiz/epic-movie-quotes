@@ -12,10 +12,10 @@ const props = defineProps({
 });
 
 const totalComments = computed(() => {
-  return props.quote.likes ?? 0;
+  return props.quote.comments.length ?? 0;
 });
 const totalLikes = computed(() => {
-  return props.quote.likes ?? 0;
+  return props.quote.likes.length ?? 0;
 });
 
 const isModalActionsOpen = ref(false);

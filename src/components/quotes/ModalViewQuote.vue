@@ -8,6 +8,9 @@ import { activateModal, deactivateModal } from "@/utils/toggleAuthModals.js";
 import { computed } from "vue";
 import { destroyQuote } from "@/services/api/quotes";
 import { getMovie } from "@/services/api/movies.js";
+import QuoteComments from "@/components/quotes/QuoteComments.vue";
+import QuoteStatistics from "@/components/quotes/QuoteStatistics.vue";
+import QuoteAddComment from "@/components/quotes/QuoteAddComment.vue";
 import IconExit from "@/components/icons/IconExit.vue";
 import IconPensil from "@/components/icons/IconPensil.vue";
 import IconTrash from "@/components/icons/IconTrash.vue";
@@ -44,6 +47,14 @@ const openEditQuote = () => {
   });
   activateModal(authModalStore, "modalEditQuote");
 };
+
+const totalLikes = computed(() => {
+  return quoteStore.likes.length ?? 0;
+});
+
+const totalComments = computed(() => {
+  return quoteStore.comments.length ?? 0;
+});
 </script>
 <template>
   <transition
@@ -56,7 +67,7 @@ const openEditQuote = () => {
     leave-to-class="opacity-0"
   >
     <div
-      class="fixed top-0 left-0 bottom-0 right-0 bg-darkBlack bg-opacity-50"
+      class="fixed top-0 left-0 bottom-0 right-0 bg-darkBlack bg-opacity-50 overflow-y-auto"
       v-if="isModalOpen"
     >
       <div
@@ -119,6 +130,14 @@ const openEditQuote = () => {
                   class="block w-full h-full object-cover"
                 />
               </div>
+              <QuoteStatistics
+                :quoteId="quoteStore.id"
+                :likes="quoteStore.likes"
+                :likesNumber="totalLikes"
+                :commentsNumber="totalComments"
+              />
+              <QuoteComments :comments="quoteStore.comments" />
+              <QuoteAddComment :quoteId="quoteStore.id" />
             </div>
           </div>
         </div>
