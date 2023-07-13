@@ -7,6 +7,8 @@ export const useQuoteStore = defineStore("quoteStore", {
       title: "",
       title_ka: "",
       thumbnail: null,
+      comments: [],
+      likes: [],
     };
   },
 });
