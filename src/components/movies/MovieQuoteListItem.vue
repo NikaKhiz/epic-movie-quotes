@@ -1,7 +1,11 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
+import { useQuoteStore } from "@/stores/quoteStore.js";
+import { useEditQuoteStore } from "@/stores/editQuoteStore.js";
+import { getLikes } from "@/services/api/quotes";
 import IconDots from "@/components/icons/IconDots.vue";
 import IconHeartEmpty from "@/components/icons/IconHeartEmpty.vue";
+import IconHeartFilled from "@/components/icons/IconHeartFilled.vue";
 import IconComment from "@/components/icons/IconComment.vue";
 import ModalActionsQuote from "../quotes/ModalActionsQuote.vue";
 const props = defineProps({
@@ -11,11 +15,27 @@ const props = defineProps({
   },
 });
 
+const quoteStore = useQuoteStore();
+const editQuoteStore = useEditQuoteStore();
+onMounted(() => {
+  quoteStore.$patch(props.quote);
+  editQuoteStore.$patch(props.quote);
+  getLikes(props.quote.id).then((response) => {
+    if (response.data.liked == true) {
+      quoteStore.userLike = true;
+    }
+  });
+});
+
+const hasUserLiked = computed(() => {
+  return quoteStore.userLike;
+});
+
 const totalComments = computed(() => {
-  return props.quote.likes ?? 0;
+  return quoteStore.comments.length ?? 0;
 });
 const totalLikes = computed(() => {
-  return props.quote.likes ?? 0;
+  return quoteStore.users ?? 0;
 });
 
 const isModalActionsOpen = ref(false);
@@ -62,7 +82,11 @@ const closeActionsModal = () => {
         <div class="flex items-center gap-3">
           <span class="text-neutralWhite text-xl">{{ totalLikes }}</span>
           <div class="w-6 h-6 flex items-center justify-center">
-            <IconHeartEmpty class="block w-full object-cover" />
+            <IconHeartEmpty
+              v-if="!hasUserLiked"
+              class="block w-full object-cover"
+            />
+            <IconHeartFilled v-else class="block w-full object-cover" />
           </div>
         </div>
       </div>

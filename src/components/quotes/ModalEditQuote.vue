@@ -6,7 +6,6 @@ import { useUserStore } from "@/stores/userStore.js";
 import { deactivateModal } from "@/utils/toggleAuthModals.js";
 import { destroyQuote } from "@/services/api/quotes.js";
 import { updateQuote } from "@/services/api/quotes.js";
-import { getMovie } from "@/services/api/movies.js";
 import { computed } from "vue";
 import { Form } from "vee-validate";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
@@ -37,17 +36,23 @@ const editQuote = (values) => {
     editQuoteStore.id
   ).then(() => {
     onOutsideClick();
-    getMovie(moviesStore.currentMovie.id).then((response) => {
-      moviesStore.currentMovie = response.data.movie;
+    const newQuotes = moviesStore.currentMovie.quotes.filter(
+      (quote) => quote.id !== editQuoteStore.id
+    );
+    newQuotes.push({
+      ...editQuoteStore,
+      thumbnail: URL.createObjectURL(editQuoteStore.thumbnail),
     });
+    moviesStore.currentMovie.quotes = newQuotes;
   });
 };
 const deleteQuote = () => {
   destroyQuote(editQuoteStore.id).then(() => {
     onOutsideClick();
-    getMovie(moviesStore.currentMovie.id).then((response) => {
-      moviesStore.currentMovie = response.data.movie;
-    });
+    const newQuotes = moviesStore.currentMovie.quotes.filter(
+      (quote) => quote.id !== editQuoteStore.id
+    );
+    moviesStore.currentMovie.quotes = newQuotes;
   });
 };
 </script>

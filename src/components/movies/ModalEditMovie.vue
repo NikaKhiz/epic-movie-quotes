@@ -9,7 +9,6 @@ import { useMoviesStore } from "@/stores/moviesStore.js";
 import { updateMovie } from "@/services/api/movies.js";
 import { useGenresStore } from "@/stores/genresStore.js";
 import { getGenres } from "@/services/api/genres.js";
-import { getMovie } from "@/services/api/movies.js";
 import { useBackErrorsStore } from "@/stores/backEndValidationStore.js";
 import IconExit from "@/components/icons/IconExit.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
@@ -54,9 +53,10 @@ const editMovie = (values) => {
     editMoviesStore.id
   ).then(() => {
     deactivateModal(authModalStore);
-    getMovie(editMoviesStore.id).then((response) => {
-      moviesStore.currentMovie = response.data.movie;
-    });
+    moviesStore.currentMovie = {
+      ...editMoviesStore,
+      thumbnail: URL.createObjectURL(editMoviesStore.thumbnail),
+    };
     editMoviesStore.$reset();
   });
 };

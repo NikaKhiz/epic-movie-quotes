@@ -8,7 +8,6 @@ import { useAddMoviesStore } from "@/stores/addMoviesStore.js";
 import { addMovie } from "@/services/api/movies.js";
 import { useGenresStore } from "@/stores/genresStore.js";
 import { getGenres } from "@/services/api/genres.js";
-import { getMovies } from "@/services/api/movies.js";
 import { useMoviesStore } from "@/stores/moviesStore.js";
 import { useBackErrorsStore } from "@/stores/backEndValidationStore.js";
 import IconExit from "@/components/icons/IconExit.vue";
@@ -66,9 +65,7 @@ const createMovie = (values) => {
     thumbnail
   ).then(() => {
     deactivateModal(authModalStore);
-    getMovies().then((response) => {
-      moviesStore.movies = response.data.movies;
-    });
+    moviesStore.movies.push({ ...addMoviesStore });
     addMoviesStore.$reset();
   });
 };

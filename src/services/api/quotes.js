@@ -30,3 +30,21 @@ export const getQuote = async (quoteId) => {
   const response = await axios.get(`/api/quotes/${quoteId}`);
   return response;
 };
+
+export const addComment = async (comment, quoteId) => {
+  const response = await axios.post(`/api/quotes/${quoteId}/comment`, {
+    comment,
+    quote_id: quoteId,
+  });
+  return response;
+};
+
+export const likeQuote = async (quoteId) => {
+  const response = await axios.get(`/api/quotes/${quoteId}/like`);
+  return response;
+};
+
+export const getLikes = async (quoteId) => {
+  const response = await axios.get(`/api/quotes/${quoteId}/liked`);
+  return response;
+};

@@ -2,10 +2,7 @@
 import { activateModal } from "@/utils/toggleAuthModals.js";
 import { useAuthModalStore } from "@/stores/authModalStore";
 import { useMoviesStore } from "@/stores/moviesStore.js";
-import { useEditQuoteStore } from "@/stores/editQuoteStore.js";
-import { useQuoteStore } from "@/stores/quoteStore.js";
 import { destroyQuote } from "@/services/api/quotes";
-import { getMovie } from "@/services/api/movies.js";
 import IconEye from "@/components/icons/IconEye.vue";
 import IconTrash from "@/components/icons/IconTrash.vue";
 import IconPensil from "@/components/icons/IconPensil.vue";
@@ -19,22 +16,19 @@ const props = defineProps({
 
 const moviesStore = useMoviesStore();
 const authModalStore = useAuthModalStore();
-const quoteStore = useQuoteStore();
-const editQuoteStore = useEditQuoteStore();
 
 const openQuote = () => {
-  quoteStore.$patch(props.quote);
   activateModal(authModalStore, "modalViewQuote");
 };
 const openEditQuote = () => {
-  editQuoteStore.$patch(props.quote);
   activateModal(authModalStore, "modalEditQuote");
 };
 const deleteQuote = () => {
   destroyQuote(props.quote.id).then(() => {
-    getMovie(moviesStore.currentMovie.id).then((response) => {
-      moviesStore.currentMovie = response.data.movie;
-    });
+    const newQuotes = moviesStore.currentMovie.quotes.filter(
+      (quote) => quote.id !== props.quote.id
+    );
+    moviesStore.currentMovie.quotes = newQuotes;
   });
 };
 </script>
