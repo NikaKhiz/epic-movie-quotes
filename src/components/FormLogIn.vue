@@ -37,8 +37,7 @@ const signIn = async () => {
           router.push({ name: "movies" });
           loginStore.$reset();
           getUserInfo()
-            .then((response) => {
-               = response.data.user.id;
+            .then(() => {
               userStore.userName = response.data.user.name;
               userStore.userEmail = response.data.user.email;
               userStore.isGoogleAccaunt = response.data.user.google_accaunt;
