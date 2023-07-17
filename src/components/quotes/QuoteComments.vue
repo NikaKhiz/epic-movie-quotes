@@ -20,12 +20,17 @@ defineProps({
       >
         <div class="flex items-center gap-4">
           <div
-            class="w-10 md:w-12 rounded-full overflow-hidden"
+            class="w-10 h-10 md:h-12 md:w-12 rounded-full overflow-hidden"
             v-if="comment.user.profile_picture"
           >
             <img :src="comment.user.profile_picture" alt="personimg" />
           </div>
-          <ProfileImageDefault v-else :userName="comment.user.name" />
+          <div
+            class="w-10 h-10 md:h-12 md:w-12 rounded-full overflow-hidden"
+            v-else
+          >
+            <ProfileImageDefault :userName="comment.user.name" />
+          </div>
           <p class="capitalize">{{ comment.user.name }}</p>
         </div>
         <div class="md:pl-16 pr-4">

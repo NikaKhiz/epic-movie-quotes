@@ -39,7 +39,9 @@ const addNewComment = () => {
     >
       <img :src="userImg" alt="currentUser" class="w-full block object-cover" />
     </div>
-    <ProfileImageDefault v-else :userName="userName" />
+    <div class="w-10 md:w-12 h-10 md:h-12 rounded-full overflow-hidden" v-else>
+      <ProfileImageDefault :userName="userName" />
+    </div>
     <Form class="w-full" @submit="addNewComment">
       <InputTextAddComment
         name="comment"

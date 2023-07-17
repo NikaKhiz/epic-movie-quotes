@@ -4,9 +4,18 @@ import ButtonLanguage from "@/components/ui/buttons/ButtonLanguage.vue";
 import ButtonNotifications from "@/components/ui/buttons/ButtonNotifications.vue";
 import ButtonHamburger from "@/components/ui/buttons/ButtonHamburger.vue";
 import ButtonSearch from "@/components/ui/buttons/ButtonSearch.vue";
+import { logoutUser } from "@/services/api/auth.js";
+import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/userStore.js";
 
+const router = useRouter();
+const userStore = useUserStore();
 const logOut = () => {
-  //logout user
+  logoutUser().then(() => {
+    localStorage.setItem("isAuthed", JSON.stringify(false));
+    router.push({ name: "landing" });
+    userStore.$reset();
+  });
 };
 </script>
 
