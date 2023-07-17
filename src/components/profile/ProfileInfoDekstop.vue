@@ -5,6 +5,7 @@ import { useBackErrorsStore } from "@/stores/backEndValidationStore.js";
 import { useUserStore } from "@/stores/userStore";
 import { computed } from "vue";
 import { updateProfile } from "@/services/api/updateProfile";
+import { isBackEndErrors } from "@/utils/isBackEndErrors.js";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
 import InputText from "@/components/ui/InputText.vue";
 import ProfileInfoPicture from "@/components/profile/ProfileInfoPicture.vue";
@@ -45,19 +46,23 @@ const onSubmit = () => {
     profile_picture.value,
     password.value,
     passwordConfirmation
-  ).then((response) => {
-    userStore.userName = response.data.name
-      ? editProfileStore.userName.value
-      : userStore.userName;
-    userStore.profile_picture = response.data.profile_picture
-      ? URL.createObjectURL(editProfileStore.profile_picture.value)
-      : userStore.profile_picture;
-    editProfileStore.$reset();
-    editProfileStore.changesMade = true;
-    setTimeout(() => {
-      editProfileStore.changesMade = false;
-    }, 3000);
-  });
+  )
+    .then((response) => {
+      userStore.userName = response.data.name
+        ? editProfileStore.userName.value
+        : userStore.userName;
+      userStore.profile_picture = response.data.profile_picture
+        ? URL.createObjectURL(editProfileStore.profile_picture.value)
+        : userStore.profile_picture;
+      editProfileStore.$reset();
+      editProfileStore.changesMade = true;
+      setTimeout(() => {
+        editProfileStore.changesMade = false;
+      }, 3000);
+    })
+    .catch((error) => {
+      backErrorsStore.errors = isBackEndErrors(error.response);
+    });
 };
 
 const closeProfileEditing = () => {
