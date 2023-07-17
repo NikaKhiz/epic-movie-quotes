@@ -21,6 +21,7 @@ export const useEditProfileStore = defineStore("editProfileStore", {
         isEditing: false,
       },
       passwordConfirmation: "",
+      changesMade: false,
     };
   },
 });
