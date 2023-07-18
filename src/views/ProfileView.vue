@@ -19,8 +19,10 @@ const mobileDimensions = inject("mobileDimensions");
       <NavigationUser class="hidden md:flex" />
     </template>
     <template #profile-info>
-      <IconBack v-if="mobileDimensions" class="w-6 h-6" />
-      <p v-else class="text-neutralWhite text-2xl capitalize">my profile</p>
+      <div class="px-9 py-8">
+        <IconBack v-if="mobileDimensions" class="w-6 h-6" />
+        <p v-else class="text-neutralWhite text-2xl capitalize">my profile</p>
+      </div>
       <ProfileInfoMobile v-if="mobileDimensions" />
       <ProfileInfoDekstop v-else />
     </template>

@@ -11,6 +11,7 @@ onMounted(() => {
       userStore.userName = response.data.user.name;
       userStore.userEmail = response.data.user.email;
       userStore.isGoogleAccaunt = response.data.user.google_accaunt;
+      userStore.profile_picture = response.data.user.profile_picture;
       localStorage.setItem("isAuthed", true);
     })
     .catch(() => {

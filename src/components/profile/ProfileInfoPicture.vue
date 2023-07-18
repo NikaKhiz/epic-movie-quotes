@@ -41,8 +41,8 @@ const hasNotError = computed(() => {
 });
 </script>
 <template>
-  <div class="flex flex-col justify-center items-center gap-2">
-    <div class="md:w-44 md:h-44 rounded-full overflow-hidden">
+  <div class="relative flex flex-col justify-center items-center gap-2">
+    <div class="w-44 h-44 rounded-full overflow-hidden">
       <img
         v-if="userStore.profile_picture"
         :src="userStore.profile_picture"
@@ -53,7 +53,7 @@ const hasNotError = computed(() => {
     </div>
     <label
       :for="name"
-      class="relative text-neutralWhite rounded-sm cursor-pointer text-base md:text-xl"
+      class="text-neutralWhite rounded-sm cursor-pointer text-base md:text-xl"
     >
       <Field
         :type="type"
@@ -72,7 +72,7 @@ const hasNotError = computed(() => {
     />
     <span
       v-if="hasNotError"
-      class="absolute top-full left-1 text-neutralWhite font-normal text-sm"
+      class="absolute top-full text-neutralWhite font-normal text-sm"
     >
       image: {{ updatedPicture }}
     </span>
