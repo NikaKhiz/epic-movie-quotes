@@ -6,6 +6,9 @@ import { useLoginStore } from "@/stores/loginStore.js";
 import { login } from "@/services/api/auth";
 import { isBackEndErrors } from "@/utils/isBackEndErrors.js";
 import { authViaGoogle } from "@/utils/googleAuthentication.js";
+import { useRouter } from "vue-router";
+import { getUserInfo } from "@/services/api/auth.js";
+import { useUserStore } from "@/stores/userStore.js";
 import FormMain from "@/components/FormMain.vue";
 import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
 import ButtonPrimary from "@/components/ui/buttons/ButtonPrimary.vue";
@@ -16,18 +19,34 @@ import FormFields from "@/components/FormFields.vue";
 import FormHeading from "@/components/FormHeading.vue";
 import FormFooter from "@/components/FormFooter.vue";
 import InputText from "@/components/ui/InputText.vue";
+import axios from "@/plugins/axios";
+
 const modalStore = useModalStore();
 const backErrorsStore = useBackErrorsStore();
 const loginStore = useLoginStore();
-import axios from "@/plugins/axios";
+const userStore = useUserStore();
+const router = useRouter();
 
 const signIn = async () => {
   axios.get("sanctum/csrf-cookie").then(() => {
     login(loginStore.email, loginStore.password)
       .then((response) => {
         if (response.status === 204) {
+          localStorage.setItem("isAuthed", JSON.stringify(true));
           toggleModal(modalStore, "");
+          router.push({ name: "movies" });
           loginStore.$reset();
+          getUserInfo()
+            .then(() => {
+              userStore.userName = response.data.user.name;
+              userStore.userEmail = response.data.user.email;
+              userStore.isGoogleAccaunt = response.data.user.google_accaunt;
+              localStorage.setItem("isAuthed", true);
+            })
+            .catch(() => {
+              userStore.$reset();
+              localStorage.setItem("isAuthed", false);
+            });
         }
       })
       .catch((error) => {

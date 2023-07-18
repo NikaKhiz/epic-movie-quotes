@@ -6,10 +6,10 @@ import IconCamera from "@/components/icons/IconCamera.vue";
 import IconCameraRed from "@/components/icons/IconCameraRed.vue";
 import IconHome from "@/components/icons/IconHome.vue";
 import IconHomeRed from "@/components/icons/IconHomeRed.vue";
+import ProfileImageDefault from "@/components/shared/ProfileImageDefault.vue";
 
 const route = useRoute();
 const userStore = useUserStore();
-const { userName, userImg } = userStore;
 
 const newsFeed = computed(() => {
   return route.name === "news-feed";
@@ -27,16 +27,22 @@ const profile = computed(() => {
   >
     <div class="flex items-center gap-5 md:gap-6">
       <div
-        class="w-10 md:w-14 rounded-full overflow-hidden border-1"
+        class="w-10 h-10 md:h-14 md:w-14 rounded-full overflow-hidden border-1"
         :class="{
           'border-neutralRed': profile,
           'border-transparent': !profile,
         }"
       >
-        <img :src="userImg" alt="useImg" class="block w-full object-cover" />
+        <img
+          v-if="userStore.profile_picture"
+          :src="userStore.profile_picture"
+          alt="useImg"
+          class="block w-full h-full object-cover"
+        />
+        <ProfileImageDefault v-else :userName="userStore.userName" />
       </div>
       <div>
-        <p class="text-base md:text-2xl capitalize">{{ userName }}</p>
+        <p class="text-base md:text-2xl capitalize">{{ userStore.userName }}</p>
         <router-link :to="{ name: 'profile' }" class="text-lightBlue"
           >Edit your profile</router-link
         >

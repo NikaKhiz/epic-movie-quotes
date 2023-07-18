@@ -25,7 +25,7 @@ const quoteStore = useQuoteStore();
 
 const likeTheQuote = () => {
   likeQuote(props.quoteId).then((response) => {
-    if (response.data.like == true) {
+    if (response.data.like) {
       quoteStore.$patch({
         users: quoteStore.users + 1,
         userLike: true,

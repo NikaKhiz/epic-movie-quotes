@@ -29,6 +29,11 @@ export const login = async (email, password) => {
   return response;
 };
 
+export const logoutUser = async () => {
+  const response = await axios.get("/api/logout");
+  return response;
+};
+
 export const recoverPassword = async (email) => {
   const response = await axios.post(
     "/api/forgot-password",
@@ -54,5 +59,10 @@ export const resetPassword = async (
       password_confirmation: passwordConfirmation,
     })
   );
+  return response;
+};
+
+export const getUserInfo = () => {
+  const response = axios.get("/api/user");
   return response;
 };

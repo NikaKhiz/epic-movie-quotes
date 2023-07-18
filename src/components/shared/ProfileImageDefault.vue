@@ -1,19 +1,15 @@
 <script setup>
 import { computed } from "vue";
+import { useUserStore } from "@/stores/userStore.js";
 
-const props = defineProps({
-  userName: {
-    type: String,
-    required: true,
-  },
-});
+const userStore = useUserStore();
 const firstLetter = computed(() => {
-  return props.userName[0].toUpperCase();
+  return userStore.userName && userStore.userName[0].toUpperCase();
 });
 </script>
 <template>
   <div
-    class="w-10 md:w-12 h-10 md:h-12 rounded-full flex items-center justify-center text-neutralWhite bg-darkGray"
+    class="w-full h-full rounded-full flex items-center justify-center text-neutralWhite bg-darkGray"
   >
     {{ firstLetter }}
   </div>
