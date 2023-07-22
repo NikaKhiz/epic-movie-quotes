@@ -1,6 +1,6 @@
 <script setup>
 import { useModalStore } from "@/stores/modalStore.js";
-import { computed, inject, provide } from "vue";
+import { computed, inject } from "vue";
 import FormSignUp from "@/components/FormSignUp.vue";
 import FormLogIn from "@/components/FormLogIn.vue";
 import FormPasswordRecovery from "@/components/FormPasswordRecovery.vue";
