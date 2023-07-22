@@ -1,6 +1,6 @@
 <script setup>
 import { useModalStore } from "@/stores/modalStore.js";
-import { computed, provide } from "vue";
+import { computed, inject, provide } from "vue";
 import FormSignUp from "@/components/FormSignUp.vue";
 import FormLogIn from "@/components/FormLogIn.vue";
 import FormPasswordRecovery from "@/components/FormPasswordRecovery.vue";
@@ -26,19 +26,14 @@ const availableDialogs = {
 const selectedComponent = computed(() => {
   return availableDialogs[modalStore.activeDialog];
 });
-
-const fullScreenModal = computed(() => {
-  return window.innerWidth <= 380;
-});
-
-provide("fullScreenModal", fullScreenModal);
+const mobileDimensions = inject("mobileDimensions");
 </script>
 <template>
   <v-dialog
     v-model="modalStore.dialog[modalStore.activeDialog]"
     class="w-full md:max-w-2xl"
     :class="{
-      'bg-darkBlack ': fullScreenModal,
+      'bg-darkBlack ': mobileDimensions,
     }"
   >
     <transition
