@@ -1,9 +1,11 @@
 <script setup>
 import ModalMain from "@/components/ModalMain.vue";
-import { computed, onMounted, provide } from "vue";
+import { onMounted, provide, ref } from "vue";
 import { getUserInfo } from "@/services/api/auth.js";
 import { useUserStore } from "@/stores/userStore.js";
+
 const userStore = useUserStore();
+const mobileDimensions = ref(false);
 
 onMounted(() => {
   getUserInfo()
@@ -18,9 +20,17 @@ onMounted(() => {
       userStore.$reset();
       localStorage.setItem("isAuthed", false);
     });
-});
-const mobileDimensions = computed(() => {
-  return window.innerWidth <= 768;
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth <= 768) {
+      mobileDimensions.value = true;
+    } else {
+      mobileDimensions.value = false;
+    }
+    return () => {
+      window.removeEventListener("resize");
+    };
+  });
 });
 provide("mobileDimensions", mobileDimensions);
 </script>
