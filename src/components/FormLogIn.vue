@@ -7,7 +7,6 @@ import { login } from "@/services/api/auth";
 import { isBackEndErrors } from "@/utils/isBackEndErrors.js";
 import { authViaGoogle } from "@/utils/googleAuthentication.js";
 import { useRouter } from "vue-router";
-import { getUserInfo } from "@/services/api/auth.js";
 import { useUserStore } from "@/stores/userStore.js";
 import FormMain from "@/components/FormMain.vue";
 import ButtonSecondary from "@/components/ui/buttons/ButtonSecondary.vue";
@@ -31,23 +30,14 @@ const signIn = async () => {
   axios.get("sanctum/csrf-cookie").then(() => {
     login(loginStore.email, loginStore.password)
       .then((response) => {
-        if (response.status === 204) {
-          localStorage.setItem("isAuthed", JSON.stringify(true));
-          toggleModal(modalStore, "");
-          router.push({ name: "movies" });
-          loginStore.$reset();
-          getUserInfo()
-            .then(() => {
-              userStore.userName = response.data.user.name;
-              userStore.userEmail = response.data.user.email;
-              userStore.isGoogleAccaunt = response.data.user.google_accaunt;
-              localStorage.setItem("isAuthed", true);
-            })
-            .catch(() => {
-              userStore.$reset();
-              localStorage.setItem("isAuthed", false);
-            });
-        }
+        userStore.userName = response.data.user.name;
+        userStore.userEmail = response.data.user.email;
+        userStore.isGoogleAccaunt = response.data.user.google_accaunt;
+        userStore.profile_picture = response.data.user.profile_picture;
+        loginStore.$reset();
+        toggleModal(modalStore, "");
+        localStorage.setItem("isAuthed", JSON.stringify(true));
+        router.push({ name: "movies" });
       })
       .catch((error) => {
         if (error.response.status === 403) {
