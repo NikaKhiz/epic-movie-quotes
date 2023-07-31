@@ -9,7 +9,7 @@ const props = defineProps({
 });
 
 const firstLetter = computed(() => {
-  return props.userName[0].toUpperCase();
+  return props.userName && props.userName[0].toUpperCase();
 });
 </script>
 <template>
